@@ -1,0 +1,58 @@
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body, html {
+    min-height: 100%;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#test-canvas {
+    height: 600px;
+    width: 600px;
+    border: 1px solid black;
+}
+
+.drag-box {
+    height: 100px;
+    width: 100px;
+    background-color: skyblue;
+    border: 1px solid black;
+
+    -webkit-transform: translate(0px, 0px);
+    transform: translate(0px, 0px);
+
+    position: relative;
+    left: 100px;
+}
+
+#canvas {
+    position: absolute;
+}
+
+#canvas-pieces {
+    background-color: rgb(240, 240, 240);
+    position: absolute;
+    z-index: 1;
+}
+
+#canvas-puzzle {
+    background-color: rgb(200, 200, 255);
+    position: absolute;
+    right: 0;
+}
+
+.puzzle-piece {
+    /*display: block;*/
+    position: absolute;
+
+    -webkit-transform: translate(0px, 0px);
+    transform: translate(0px, 0px);
+}

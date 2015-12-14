@@ -1,0 +1,10 @@
+<h1>Puzzles!</h1>
+
+<div id="canvas" style="height:<%= @puzzle.height %>px; width: <%= @puzzle.width * 2 %>px">
+    <div id="canvas-pieces" style="height:<%= @puzzle.height %>px; width: <%= @puzzle.width %>px">
+    <% @puzzle.pieces.each do|p| %>
+        <img class="puzzle-piece" src="<%= p.path %>"/>
+    <% end %>
+    </div>
+    <div id="canvas-puzzle" style="height:<%= @puzzle.height %>px; width: <%= @puzzle.width %>px"></div>
+</div>
