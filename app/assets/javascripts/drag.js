@@ -29,4 +29,49 @@ $(".puzzles.test").ready(function() {
     // this is used later in the resizing and gesture demos
       window.dragMoveListener = dragMoveListener;
 
-  });
+
+
+
+    interact('.dropzone').dropzone({
+    // only accept elements matching this CSS selector
+    accept: '.drag-box',
+    // Require a 75% element overlap for a drop to be possible
+    overlap: 0.5,
+
+    // listen for drop related events:
+
+    ondropactivate: function (event) {
+        // add active dropzone feedback
+        //event.target.classList.add('drop-active');
+    },
+    ondragenter: function (event) {
+        var draggableElement = event.relatedTarget,
+            dropzoneElement = event.target;
+
+        // feedback the possibility of a drop
+        dropzoneElement.classList.add('dropzone-bg');
+        draggableElement.classList.add('can-drop');
+        draggableElement.textContent = 'Dragged in'
+    },
+    ondragleave: function (event) {
+            // remove the drop feedback style
+            event.target.classList.remove('dropzone-bg');
+            event.relatedTarget.classList.remove('can-drop');
+            event.relatedTarget.textContent = 'Dragged out';
+    },
+    ondrop: function (event) {
+        var draggableElement = event.relatedTarget,
+            dropzoneElement = event.target;
+
+        draggableElement.textContent = 'Dropped';
+        $(draggableElement).css("transform",  $(dropzoneElement).css("transform"));
+    },
+    ondropdeactivate: function (event) {
+        // remove active dropzone feedback
+        event.target.classList.remove('drop-active');
+        event.target.classList.remove('drop-target');
+    }
+    });
+
+
+});

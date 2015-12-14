@@ -1,10 +1,16 @@
 <h1>Puzzles!</h1>
 
+<div>
+    <form action="#">
+        <select name="grid-size" id="grid-size">
+            <option value="3">3 x 3</option>
+        </select>
+    </form>
+</div>
+
 <div id="canvas" style="height:<%= @puzzle.height %>px; width: <%= @puzzle.width * 2 %>px">
     <div id="canvas-pieces" style="height:<%= @puzzle.height %>px; width: <%= @puzzle.width %>px">
-    <% @puzzle.pieces.each do|p| %>
-        <img class="puzzle-piece" src="<%= asset_path( p.path ) %>"/>
-    <% end %>
     </div>
-    <div id="canvas-puzzle" style="height:<%= @puzzle.height %>px; width: <%= @puzzle.width %>px"></div>
+    <div id="canvas-puzzle" style="height:<%= @puzzle.height %>px; width: <%= @puzzle.width %>px">
+    </div>
 </div>
