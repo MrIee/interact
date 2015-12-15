@@ -1,0 +1,38 @@
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Warning!</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<h1>Puzzles</h1>
+<form>
+    <select name="puzzle_name" id="puzzle-name" size="3" multiple>
+    <% @puzzle.each do |p| %>
+        <option value="<%= p.title %>">
+            <%= p.title %>
+        </option>
+    <% end %>
+    </select>
+
+    <select name="grid_size" id="grid-size">
+        <option value="3">3 x 3</option>
+        <option value="5">5 x 5</option>
+        <option value="7">7 x 7</option>
+    </select>
+
+    <%= link_to("Play!", "#{puzzles_path}/#{@puzzle.first.title}/3" , :id => "puzzle-play", "data-url" => "#{puzzles_path}/#{@puzzle.first.title}" ) %>
+</form>

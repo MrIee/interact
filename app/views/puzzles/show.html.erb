@@ -1,0 +1,39 @@
+<!-- Modal -->
+<div class="modal fade" id="winModal" tabindex="-1" role="dialog" aria-labelledby="winModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="winModalLabel">Congratulations!</h4>
+      </div>
+      <div class="modal-body">
+        You solved the puzzle! Play again?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" id="puzzle-goBack" data-dismiss="modal" data-backUrl = "<%= puzzles_path %>">No</button>
+        <button type="button" class="btn btn-primary" id="puzzle-reload" data-dismiss="modal">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<h1><%= @puzzle.title %></h1>
+
+<div id="canvas" style="height:<%= @puzzle.height %>px; width: <%= @puzzle.width * 2 %>px">
+    <div id="canvas-pieces" style="height:<%= @puzzle.height %>px; width: <%= @puzzle.width %>px">
+    </div>
+    <div id="canvas-puzzle" style="height:<%= @puzzle.height %>px; width: <%= @puzzle.width %>px">
+    </div>
+</div>
+
+<script>
+$(".puzzles.show").ready(function() {   
+    runPuzzle( "url(/assets/batman-logo/Batman-Logo.gif)", <%= params[:size] %> );
+});
+</script>
+
+<!-- // <script> -->
+<!-- //     var image = "<%#= asset_path '' %>" -->
+<!-- // </script> -->

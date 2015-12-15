@@ -1,8 +1,16 @@
 Rails.application.routes.draw do
-  resources :users
-  root :to => "puzzles#puzzle"
+
+  root :to => "pages#index"
+
+  resources :users, :except => [:edit]
+  get "/login" => "session#new"
+  post "/login" => "session#create"
+  delete "login" => "session#destroy"
+
   get "/test" => "puzzles#test" 
-  get "/puzzle/:title" => "puzzles#puzzle"
-  get "/puzzle" => "puzzles#puzzle"
+  get "/puzzles/:title/:size" => "puzzles#show"
+  get "/puzzles" => "puzzles#index"
+
+  get "/bootstrap/demo" => "pages#bootstrap"
 
 end

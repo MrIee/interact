@@ -12,10 +12,9 @@
 #
 
 class User < ActiveRecord::Base
-    has_many :puzzles
-
     has_secure_password
+    has_many :puzzles
     validates :email, :presence => true, :uniqueness => true
     validates :first_name, :presence => true, :length => { :minimum => 2 } #minimum characters
-    validates :last_name, :presence => true, :length => { :minimum => 2 } #minimum characters
+    validates :last_name, :presence => true, :length => { :minimum => 2 } #
 end

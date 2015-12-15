@@ -6,7 +6,6 @@
 #  first_name      :text
 #  last_name       :text
 #  email           :text
-#  password        :text
 #  password_digest :text
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null

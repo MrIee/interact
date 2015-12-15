@@ -49,13 +49,10 @@ body {
     position: absolute;
 }
 
-.dropzone-correct-bg {
-    background-color: green;
+.dropzone-bg {
+    background-color: lightgreen;
 }
 
-.dropzone-hover-bg {
-    background-color: darkblue;
-}
 
 
 
@@ -74,15 +71,19 @@ body {
 
 #canvas-puzzle {
     background-color: rgb(200, 225, 255);
-    /*border: 3px solid #333;*/
     position: absolute;
     right: 0;
 }
 
 .puzzle-piece {
-    /*display: block;*/
     position: absolute;
+    border: 1px solid black;
+}
 
-   /* -webkit-transform: translate(0px, 0px);
-    transform: translate(0px, 0px); */
+.dropzone-correct-bg {
+    background-color: green;
+}
+
+.dropzone-hover-bg {
+    background-color: darkblue;
 }
