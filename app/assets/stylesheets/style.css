@@ -49,8 +49,12 @@ body {
     position: absolute;
 }
 
-.dropzone-bg {
+.dropzone-correct-bg {
     background-color: green;
+}
+
+.dropzone-hover-bg {
+    background-color: darkblue;
 }
 
 

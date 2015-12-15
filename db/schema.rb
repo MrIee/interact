@@ -16,14 +16,6 @@ ActiveRecord::Schema.define(version: 20151212002531) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "pieces", force: :cascade do |t|
-    t.text     "label"
-    t.text     "path"
-    t.integer  "puzzle_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "puzzles", force: :cascade do |t|
     t.text     "title"
     t.integer  "height"
