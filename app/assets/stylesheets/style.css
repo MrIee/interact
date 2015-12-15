@@ -79,6 +79,6 @@ body {
     /*display: block;*/
     position: absolute;
 
-    -webkit-transform: translate(0px, 0px);
-    transform: translate(0px, 0px);
+   /* -webkit-transform: translate(0px, 0px);
+    transform: translate(0px, 0px); */
 }

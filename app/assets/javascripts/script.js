@@ -6,6 +6,7 @@ $(".puzzles.puzzle").ready(function() {
 
     var size = $( "#grid-size" ).val();
     gridSize = size * size;
+    pieceScore = 0;
 
     var canvas = $("#canvas-pieces").position();
     var canvasHeight = $("#canvas-pieces").height();
@@ -19,6 +20,7 @@ $(".puzzles.puzzle").ready(function() {
 
             var $puzzlePiece = $("<div/>");
             $puzzlePiece.addClass("puzzle-piece")
+            $puzzlePiece.attr("data-position", i + "" + j);
 
             $puzzlePiece.width( Math.ceil( canvasWidth / size ) );
             $puzzlePiece.height( Math.ceil( canvasHeight / size ) );
@@ -44,6 +46,8 @@ $(".puzzles.puzzle").ready(function() {
 
             var $boardPiece = $("<div/>");
             $boardPiece.addClass("dropzone");
+            $boardPiece.attr("data-position", i + "" + j);
+
             $boardPiece.width( Math.ceil( canvasWidth / size ) );
             $boardPiece.height( Math.ceil( canvasHeight / size ) );
             $boardPiece.css({
@@ -109,12 +113,40 @@ $(".puzzles.puzzle").ready(function() {
             var draggableElement = event.relatedTarget,
                 dropzoneElement = event.target;
             dropzoneElement.classList.remove('dropzone-bg');
+
+            if ( $(draggableElement).attr("data-position") === $(dropzoneElement).attr("data-position") ) {
+                pieceScore--;
+                console.log("Pieces in correct place: " + pieceScore)
+                console.log($(draggableElement).attr("data-position"));
+                console.log($(dropzoneElement).attr("data-position"));
+            }
         },
         ondrop: function (event) {
             var draggableElement = event.relatedTarget,
                 dropzoneElement = event.target;
 
             $(draggableElement).css("transform",  $(dropzoneElement).css("transform"));
+
+            if ( $(draggableElement).attr("data-position") === $(dropzoneElement).attr("data-position") ) {
+                pieceScore++;
+
+                console.log("Pieces in correct place: " + pieceScore)
+
+                if (pieceScore === gridSize) {
+                    console.log("You Win!")
+                }
+            }
+        },
+        ondropdeactivate: function (event) {
+            var draggableElement = event.relatedTarget,
+                dropzoneElement = event.target;
+
+            // if ( $(draggableElement).attr("data-position") === $(dropzoneElement).attr("data-position") ) {
+            //     pieceScore--;
+            //     console.log("Pieces in correct place: " + pieceScore)
+            //     console.log($(draggableElement).attr("data-position"));
+            //     console.log($(dropzoneElement).attr("data-position"));
+            // }
         }
     });
 });
