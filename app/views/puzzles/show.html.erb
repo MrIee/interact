@@ -4,7 +4,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="winModalLabel">Congratulations!</h4>
+        <h4 class="modal-title" id="winModalLabel">You Solved It!</h4>
       </div>
       <div class="modal-body">
         You solved the puzzle! Play again?
@@ -29,8 +29,8 @@
 </div>
 
 <script>
-$(".puzzles.show").ready(function() {   
-    runPuzzle( "url(/assets/batman-logo/Batman-Logo.gif)", <%= params[:size] %> );
+$(document).ready(function() {   
+    runPuzzle( "url(<%= @puzzle.path %>)", <%= params[:size] %> );
 });
 </script>
 

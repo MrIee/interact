@@ -16,23 +16,24 @@
   </div>
 </div>
 
-
-
 <h1>Puzzles</h1>
-<form>
-    <select name="puzzle_name" id="puzzle-name" size="3" multiple>
-    <% @puzzle.each do |p| %>
-        <option value="<%= p.title %>">
-            <%= p.title %>
-        </option>
-    <% end %>
-    </select>
 
-    <select name="grid_size" id="grid-size">
-        <option value="3">3 x 3</option>
-        <option value="5">5 x 5</option>
-        <option value="7">7 x 7</option>
-    </select>
+<% unless @puzzles %>
+  <form>
+      <select name="puzzle_name" id="puzzle-name" size="3" multiple>
+      <% @puzzle.each do |p| %>
+          <option value="<%= p.title %>">
+              <%= p.title %>
+          </option>
+      <% end %>
+      </select>
 
-    <%= link_to("Play!", "#{puzzles_path}/#{@puzzle.first.title}/3" , :id => "puzzle-play", "data-url" => "#{puzzles_path}/#{@puzzle.first.title}" ) %>
-</form>
+      <select name="grid_size" id="grid-size">
+          <option value="3">3 x 3</option>
+          <option value="5">5 x 5</option>
+          <option value="7">7 x 7</option>
+      </select>
+
+      <%= link_to("Play!", "#{puzzles_path}/#{@puzzle.first.title}/3" , :id => "puzzle-play", "data-title" => "#{@puzzle.first.title}", "data-path" => "#{puzzles_path}", "data-size" => "3"  ) %>
+  </form>
+<% end %>

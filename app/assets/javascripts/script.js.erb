@@ -162,12 +162,18 @@ $(".puzzles.show").ready(function() {
 
 
 $(".puzzles.index").ready(function() {
+    $play = $("#puzzle-play");
 
-    $('#grid-size').on('change', function() {
-      $("#puzzle-play").attr("href", $("#puzzle-play").attr("data-url") + "/" + $(this).val() );
+    $("#puzzle-name").on("change", function() {
+        $play.attr("data-title", $(this).val() );
     });
 
-    $("#puzzle-play").on("click", function(event) {
+    $('#grid-size').on("change", function() {
+        $play.attr("data-size", $(this).val() );
+    });
+
+    $play.on("mouseenter", function(event) {
+        $(this).attr("href", $play.attr("data-path") + "/" + $play.attr("data-title") + "/" + $play.attr("data-size") );
     });
 
 });

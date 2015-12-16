@@ -1,0 +1,13 @@
+- if @puzzle.errors.any?
+    %ul
+        - @puzzle.errors.full_messages.each do |msg|
+            %li=msg
+
+= form_for @puzzle, :html => { :multipart => true } do |f|
+    %div.form-group
+        = f.label :title
+        = f.text_field :title, :required => true, :class => "form-control"
+    %div.form-group
+        = f.label :path
+        = f.cl_image_upload :path, :html => { :required => "true", :class => "form-control" }
+    = f.submit :class => "btn btn-primary"

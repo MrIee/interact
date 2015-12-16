@@ -1,0 +1,19 @@
+- if @user.errors.any?
+    %ul
+        - @user.errors.full_messages.each do |msg|
+            %li=msg
+
+= form_for @user do |f|
+    %div.form-group
+        = f.label :first_name
+        = f.text_field :first_name, :required => true, :class => "form-control"
+    %div.form-group
+        = f.label :last_name
+        = f.text_field :last_name, :required => true, :class => "form-control"
+    %div.form-group
+        = f.label :email
+        = f.email_field :email, :required => true, :class => "form-control"
+    %div.form-group
+        = f.label :password
+        = f.password_field :password, :required => true, :class => "form-control"
+        = f.submit

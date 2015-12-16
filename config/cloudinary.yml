@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: dtr4wot8a
+  api_key: '895273336622533'
+  api_secret: whwXjc1ZtApKsrnYMQAGf8U_KRs
+  enhance_image_tag: true
+  static_image_support: false
+production:
+  cloud_name: dtr4wot8a
+  api_key: '895273336622533'
+  api_secret: whwXjc1ZtApKsrnYMQAGf8U_KRs
+  enhance_image_tag: true
+  static_image_support: true
+test:
+  cloud_name: dtr4wot8a
+  api_key: '895273336622533'
+  api_secret: whwXjc1ZtApKsrnYMQAGf8U_KRs
+  enhance_image_tag: true
+  static_image_support: false
