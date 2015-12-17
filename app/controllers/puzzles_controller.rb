@@ -39,6 +39,7 @@ class PuzzlesController < ApplicationController
     def destroy
         puzzle = Puzzle.find params[:id]
         puzzle.destroy
+        Cloudinary::Uploader.destroy(puzzle[:public_id])
 
         redirect_to("/users/#{@current_user.id}/puzzles")
     end
