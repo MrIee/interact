@@ -27,7 +27,7 @@ Naturally, this means a grid of almost any size can be played. Can make for some
 
 
 ##<a name="bugs"></a>Bugs
-* If you place a puzzle piece close enough to a position on the board without actually making it snap in place, then place the correct puzzle piece in that position, you will be unable to move the first piece and hence unable to complete the puzzle.
+* If you snap a puzzle piece onto a position on the puzzle board and then place the correct piece on top of it, the first piece will be lost and the puzzle will be unsolvable
 
 ##<a name="GemsPlugins"></a>Gems/Plugins
 * interact.js   (http://interactjs.io/)
