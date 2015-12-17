@@ -7,7 +7,6 @@ PuzzlesController.prototype.show = function(){
         format: "%M:%S"
     });
 
-    
     var runPuzzle = function (image, size) {
 
         //=============== Shuffle puzzle pieces ===============
@@ -199,10 +198,10 @@ UsersController.prototype.show_puzzles = function(){
     $(".my-puzzle-play").each(function() {
 
         var $play = $(this);
-        
+
         $( "#grid-size-" + $play.attr("id") ).on("change", function() {
             $play.attr("data-size", $(this).val() );
-            
+
             
         });
 
