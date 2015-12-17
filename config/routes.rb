@@ -6,14 +6,15 @@ Rails.application.routes.draw do
   post "/login" => "session#create"
   delete "login" => "session#destroy"
 
+  
+  resources :users, :except => [:edit, :show, :destroy]
   get "/users/edit" => "users#edit"
-  resources :users, :except => [:edit]
+  get "/users/:id/puzzles/" => "users#show_puzzles"
 
   resources :puzzles, :except => [:edit]
   get "/test" => "puzzles#test" 
   get "/puzzles/:title/:size" => "puzzles#show"
-  get "/puzzles/:id" => "puzzles#user"
 
-  get "/bootstrap/demo" => "pages#bootstrap"
+  resources :scores
 
 end

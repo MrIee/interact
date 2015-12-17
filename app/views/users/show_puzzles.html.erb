@@ -1,0 +1,9 @@
+<h1>Your Puzzles</h1>
+
+<ul>
+    <% @puzzle.each do |p| %>
+    <li><%= p.title %></li>
+    <li><%= image_tag(p.path) %></li>
+     <%= link_to "Delete Puzzle", "/puzzles/#{p.id}", :method => :delete, :data => { :confirm => "Are you sure?"} %>
+    <% end %>
+</ul>

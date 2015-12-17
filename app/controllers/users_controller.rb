@@ -29,6 +29,10 @@ class UsersController < ApplicationController
     redirect_to root_path
   end
 
+  def show_puzzles
+    @puzzle = @current_user.puzzles
+  end
+
   private
   def user_params
     params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)

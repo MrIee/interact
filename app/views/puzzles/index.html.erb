@@ -18,7 +18,7 @@
 
 <h1>Puzzles</h1>
 
-<% unless @puzzles %>
+<% if !@puzzle.empty? %>
   <form>
       <select name="puzzle_name" id="puzzle-name" size="3" multiple>
       <% @puzzle.each do |p| %>
@@ -36,4 +36,9 @@
 
       <%= link_to("Play!", "#{puzzles_path}/#{@puzzle.first.title}/3" , :id => "puzzle-play", "data-title" => "#{@puzzle.first.title}", "data-path" => "#{puzzles_path}", "data-size" => "3"  ) %>
   </form>
+
+<% else %>
+
+<h2>No Puzzles to Display</h2>
+
 <% end %>

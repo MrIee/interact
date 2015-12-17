@@ -89,3 +89,10 @@ body {
 .dropzone-hover-bg {
     background-color: darkblue;
 }
+
+#timer {
+    width: 150px;
+    font-size: 4em;
+    text-align: center;
+    margin: auto;
+}

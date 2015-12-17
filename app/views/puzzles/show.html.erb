@@ -7,7 +7,9 @@
         <h4 class="modal-title" id="winModalLabel">You Solved It!</h4>
       </div>
       <div class="modal-body">
-        You solved the puzzle! Play again?
+        You solved the puzzle!<br/>
+        Your time: <span id="time"></span><br/>
+        Play again?<br/>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" id="puzzle-goBack" data-dismiss="modal" data-backUrl = "<%= puzzles_path %>">No</button>
@@ -18,9 +20,8 @@
 </div>
 
 
-
 <h1><%= @puzzle.title %></h1>
-
+<div id="timer"></div>
 <div id="canvas" style="height:<%= @puzzle.height %>px; width: <%= @puzzle.width * 2 %>px">
     <div id="canvas-pieces" style="height:<%= @puzzle.height %>px; width: <%= @puzzle.width %>px">
     </div>
@@ -30,7 +31,7 @@
 
 <script>
 $(document).ready(function() {   
-    runPuzzle( "url(<%= @puzzle.path %>)", <%= params[:size] %> );
+    // runPuzzle( "url(<%= @puzzle.path %>)", <%= params[:size] %> );
 });
 </script>
 

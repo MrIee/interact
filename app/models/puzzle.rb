@@ -12,6 +12,7 @@
 #
 
 class Puzzle < ActiveRecord::Base
+    has_many :scores
     belongs_to :user
     validates :title, :presence => true, :uniqueness => true
 end
