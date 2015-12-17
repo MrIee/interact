@@ -3,7 +3,7 @@
         - @puzzle.errors.full_messages.each do |msg|
             %li=msg
 
-= form_for @puzzle, :html => { :multipart => true } do |f|
+= form_for @puzzle, :html => { :class => "col-md-3 center-block", :multipart => true } do |f|
     %div.form-group
         = f.label :title
         = f.text_field :title, :required => true, :class => "form-control"

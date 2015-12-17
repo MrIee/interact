@@ -3,7 +3,7 @@
         - @user.errors.full_messages.each do |msg|
             %li=msg
 
-= form_for @user do |f|
+= form_for @user, :html => { :class => "col-md-3 center-block" } do |f|
     %div.form-group
         = f.label :first_name
         = f.text_field :first_name, :required => true, :class => "form-control"

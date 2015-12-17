@@ -16,29 +16,52 @@
   </div>
 </div>
 
-<h1>Puzzles</h1>
+<h1>Choose a Puzzle and Hit Play!</h1>
 
 <% if !@puzzle.empty? %>
-  <form>
-      <select name="puzzle_name" id="puzzle-name" size="3" multiple>
-      <% @puzzle.each do |p| %>
-          <option value="<%= p.title %>">
-              <%= p.title %>
-          </option>
-      <% end %>
-      </select>
 
-      <select name="grid_size" id="grid-size">
+  <form class="col-md-6 center-block" id="select-puzzle-form">
+      <div class="col-md-9" id="puzzles">
+        
+        <div>
+          <input type="radio" class="puzzle-name" id="<%= @puzzle.first.id %>" name="puzzle-title" value="<%= @puzzle.first.title %>" checked="true">
+
+          <label class="puzzle-label" for="<%= @puzzle.first.id %>">
+            <%= cl_image_tag(@puzzle.first.path, :width => 40, :crop => :fill) %>
+            <%= "#{@puzzle.first.title} | #{@puzzle.first.user.first_name} #{@puzzle.first.user.last_name}" %>
+          </label>
+        </div>
+
+
+        <% 
+          puzzle_minus_first = @puzzle[1..@puzzle.length]
+          puzzle_minus_first.each do |p|
+        %>
+            <div>
+              <input type="radio" class="puzzle-name" id="<%= p.id %>" name="puzzle-title" value="<%= p.title %>">
+
+              <label class="puzzle-label" for="<%= p.id %>">
+                <%= cl_image_tag(p.path, :width => 40, :crop => :fill) %>
+                <%= "#{p.title} | #{p.user.first_name} #{p.user.last_name}" %>
+              </label>
+            </div>
+
+        <% end %>
+
+      </div>
+
+      <select name="grid_size" class="form-control grid-size" class="grid-size">
           <option value="3">3 x 3</option>
           <option value="5">5 x 5</option>
           <option value="7">7 x 7</option>
+          <option value="9">9 x 9</option>
       </select>
 
-      <%= link_to("Play!", "#{puzzles_path}/#{@puzzle.first.title}/3" , :id => "puzzle-play", "data-title" => "#{@puzzle.first.title}", "data-path" => "#{puzzles_path}", "data-size" => "3"  ) %>
+      <%= link_to("Play!", "#{puzzles_path}/#{@puzzle.first.title}/3", :class => "btn btn-primary", :id => "puzzle-play", "data-title" => "#{@puzzle.first.title}", "data-path" => "#{puzzles_path}", "data-size" => "3"  ) %>
   </form>
 
 <% else %>
 
-<h2>No Puzzles to Display</h2>
+  <h2>No Puzzles to Display</h2>
 
 <% end %>

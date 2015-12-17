@@ -12,7 +12,6 @@ Rails.application.routes.draw do
   get "/users/:id/puzzles/" => "users#show_puzzles"
 
   resources :puzzles, :except => [:edit]
-  get "/test" => "puzzles#test" 
   get "/puzzles/:title/:size" => "puzzles#show"
 
   resources :scores

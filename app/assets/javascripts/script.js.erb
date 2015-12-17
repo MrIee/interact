@@ -1,4 +1,5 @@
 var PuzzlesController = Paloma.controller('Puzzles');
+var UsersController = Paloma.controller('Users');
 
 PuzzlesController.prototype.show = function(){
 
@@ -6,6 +7,7 @@ PuzzlesController.prototype.show = function(){
         format: "%M:%S"
     });
 
+    
     var runPuzzle = function (image, size) {
 
         //=============== Shuffle puzzle pieces ===============
@@ -113,7 +115,7 @@ PuzzlesController.prototype.show = function(){
         interact('.dropzone').dropzone({
             // only accept elements matching this CSS selector
             accept: '.puzzle-piece',
-            // Require a 75% element overlap for a drop to be possible
+            // Require a 50% element overlap for a drop to be possible
             overlap: 0.5,
 
             // listen for drop related events:
@@ -155,36 +157,58 @@ PuzzlesController.prototype.show = function(){
                     dropzoneElement = event.target;
             }
         });
+
     };
 
+    var url = this.params["url"];
+    var size = this.params["size"];
 
-    runPuzzle( "url(" + this.params["url"] + ")", this.params["size"] );
 
     $("#puzzle-goBack").on("click", function() {
-        $(location).attr( "href", $("#puzzle-goBack").attr("data-backUrl") )
+            $(location).attr( "href", $("#puzzle-goBack").attr("data-backUrl") )
     });
 
     $("#puzzle-reload").on("click", function() {
         location.reload();
     });
 
+    $(document).ready(function() {
+        runPuzzle( "url(" + url + ")", size );
+    });
+    
 };
 
-
-var PuzzlesController = Paloma.controller('Puzzles');
 
 PuzzlesController.prototype.index = function(){
    $play = $("#puzzle-play");
 
-    $("#puzzle-name").on("change", function() {
+    $("input:radio[name='puzzle-title']").on("change", function() {
         $play.attr("data-title", $(this).val() );
     });
 
-    $('#grid-size').on("change", function() {
+    $("#grid-size").on("change", function() {
         $play.attr("data-size", $(this).val() );
     });
 
     $play.on("mouseenter", function(event) {
-        $(this).attr("href", $play.attr("data-path") + "/" + $play.attr("data-title") + "/" + $play.attr("data-size") );
+        $(this).attr("href", $(this).attr("data-path") + "/" + $(this).attr("data-title") + "/" + $(this).attr("data-size") );
+    });
+};
+
+UsersController.prototype.show_puzzles = function(){
+    $(".my-puzzle-play").each(function() {
+
+        var $play = $(this);
+        
+        $( "#grid-size-" + $play.attr("id") ).on("change", function() {
+            $play.attr("data-size", $(this).val() );
+            
+            
+        });
+
+        $play.on("mouseenter", function(event) {
+            $(this).attr("href", $(this).attr("data-path") + "/" + $(this).attr("data-size") );
+        });
+
     });
 };

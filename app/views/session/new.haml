@@ -1,7 +1,7 @@
 - if flash[:error].present?
     %h2= flash[:error]
 
-= form_tag "/login", :class => "form-inline" do
+= form_tag "/login", :class => "col-md-3 center-block" do
     %div.form-group
         = label_tag "Email"
         = text_field_tag :email, nil, :autofocus => true, :required => true, :class => "form-control"

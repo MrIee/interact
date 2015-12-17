@@ -12,53 +12,49 @@ body {
     height: 100%;
     margin: 0;
     padding: 0;
+    background-image: url(jigsaw_puzzle.svg);
+    background-size: cover;
 }
 
-#test-canvas {
-    height: 600px;
-    width: 600px;
-    border: 1px solid black;
-    position: absolute;
+h1 {
+    text-align: center;
+    margin-bottom: 1em;
 }
 
-.drag-box {
-    height: 100px;
-    width: 100px;
-    background-color: skyblue;
-    border: 1px solid black;
-
-    -webkit-transform: translate(0px, 0px);
-    transform: translate(0px, 0px);
-    position: absolute;
-    z-index: 9;
+.center-block {
+    float: none;
+    margin: 0 auto;
 }
 
-#dropzone1 {
-    height: 100px;
-    width: 100px;
-    border: 1px solid green;
-    transform: translate(250px, 150px);
-    position: absolute;
+.dotless-list ul {
+    list-style: none;
+    margin-bottom: 1em;
 }
 
-#dropzone2 {
-    height: 100px;
-    width: 100px;
-    border: 1px solid green;
-    transform: translate(350px, 150px);
-    position: absolute;
+.dotless-list li {
+    list-style: none;
 }
 
-.dropzone-bg {
-    background-color: lightgreen;
+.list-title {
+    font-size: 2em;
 }
-
-
-
-
 
 #container {
     
+}
+
+.brand-link {
+    color: #000;
+    font-size: 1.5em;
+}
+
+.brand-link:hover {
+    color: #000;
+    text-decoration: none;
+}
+
+.brand-link img {
+    margin-right: 0.5em;
 }
 
 #canvas {
@@ -95,4 +91,46 @@ body {
     font-size: 4em;
     text-align: center;
     margin: auto;
+}
+
+#select-puzzle-form {
+    display: block;
+    margin: auto;
+}
+
+#puzzles {
+    height: 150px;
+    border: 3px solid black;
+    overflow: scroll;
+    background-color: #FFF;
+}
+
+#puzzles img {
+    display: inline;
+}
+
+.puzzle-label {
+    height: 40px;
+    width: 100%;
+    margin: 0;
+    line-height: 40px;
+    vertical-align: middle;
+    border-bottom: 1px solid #333;
+}
+
+#puzzles input[type=radio] {
+    display: none;
+}
+
+#puzzles input[type=radio]:checked + .puzzle-label {
+    background-color: rgb(200, 225, 255);
+}
+
+.grid-size {
+    display: inline;
+    width: 75px;
+}
+
+#puzzle-play {
+    float: right;
 }
