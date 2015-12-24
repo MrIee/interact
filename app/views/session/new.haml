@@ -1,5 +1,6 @@
 - if flash[:error].present?
-    %h2= flash[:error]
+    %ul.dotless-list
+        %li{:class => "alert alert-danger", :role => "alert"}= flash[:error]
 
 = form_tag "/login", :class => "col-md-3 center-block" do
     %div.form-group

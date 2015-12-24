@@ -3,7 +3,8 @@ class CreateScores < ActiveRecord::Migration
     create_table :scores do |t|
         t.integer :user_id
         t.integer :puzzle_id
-        t.text :time
+        t.integer :puzzle_size
+        t.text :puzzle_score
         t.timestamps null: false
     end
   end

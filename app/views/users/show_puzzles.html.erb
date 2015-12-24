@@ -5,7 +5,7 @@
         <li>
             <ul>
                 <li class="list-title"><%= p.title %></li>
-                <li><%= cl_image_tag(p.path, :width => 200, :crop => :fill) %></li>
+                <li><%= cl_image_tag(p.path, :height => 100, :crop => :fill) %></li>
                 <li>
                     <select name="grid_size" class="form-control grid-size" id="grid-size-<%= p.title %>">
                         <option value="3">3 x 3</option>

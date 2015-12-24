@@ -1,3 +1,7 @@
+$(document).ready(function() {
+    $(".alert-danger").fadeIn();
+});
+
 var PuzzlesController = Paloma.controller('Puzzles');
 var UsersController = Paloma.controller('Users');
 
@@ -147,6 +151,7 @@ PuzzlesController.prototype.show = function(){
                     if (pieceScore === gridSize) {
                         $("#timer").timer("pause");
                         $("#time").html( $("#timer").html() );
+                        $("#puzzle_score").val( $("#timer").html() );
                         $('#winModal').modal('show');
                     }
                 }

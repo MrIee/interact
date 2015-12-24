@@ -17,5 +17,6 @@ class User < ActiveRecord::Base
     has_many :scores
     validates :email, :presence => true, :uniqueness => true
     validates :first_name, :presence => true, :length => { :minimum => 2 } #minimum characters
-    validates :last_name, :presence => true, :length => { :minimum => 2 } #
+    #validates :last_name, :presence => true, :length => { :minimum => 2 } #
+    validates :username, :presence => true, :uniqueness => true, :length => { :minimum => 4, :maximum => 15 }, :format => { :with => /\A[0-9a-zA-Z|_|\-|.]*\z/, :message => "Username may only contain letters, numbers, underscores or hypens" }
 end

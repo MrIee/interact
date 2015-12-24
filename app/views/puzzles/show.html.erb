@@ -14,6 +14,15 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default" id="puzzle-goBack" data-dismiss="modal" data-backUrl = "<%= puzzles_path %>">No</button>
         <button type="button" class="btn btn-primary" id="puzzle-reload" data-dismiss="modal">Yes</button>
+        <% if @current_user.present? %>
+          <%= form_tag("/scores/create") do %>
+            <%= hidden_field_tag("puzzle_size", params[:size], :name => "score[puzzle_size]" ) %>
+            <%= hidden_field_tag("puzzle_score", "00:00", :name => "score[puzzle_score]" ) %>
+            <%= hidden_field_tag("user_id", @current_user.id, :name => "score[user_id]" ) %>
+            <%= hidden_field_tag("puzzle_id", @puzzle.id, :name => "score[puzzle_id]" ) %>
+            <%= submit_tag("Submit Score", :class => "btn btn-primary", :id => "puzzle-score") %>
+          <% end %>
+        <% end %>
       </div>
     </div>
   </div>
@@ -30,13 +39,3 @@
     <div id="canvas-puzzle" style="height:<%= @puzzle.height %>px; width: <%= @puzzle.width %>px">
     </div>
 </div>
-
-<script>
-$(document).ready(function() {   
-    // runPuzzle( "url(<%= @puzzle.path %>)", <%= params[:size] %> );
-});
-</script>
-
-<!-- // <script> -->
-<!-- //     var image = "<%#= asset_path '' %>" -->
-<!-- // </script> -->

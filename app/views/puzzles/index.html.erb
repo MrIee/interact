@@ -27,8 +27,9 @@
           <input type="radio" class="puzzle-name" id="<%= @puzzle.first.id %>" name="puzzle-title" value="<%= @puzzle.first.title %>" checked="true">
 
           <label class="puzzle-label" for="<%= @puzzle.first.id %>">
-            <%= cl_image_tag(@puzzle.first.path, :width => 40, :crop => :fill) %>
-            <%= "#{@puzzle.first.title} | #{@puzzle.first.user.first_name} #{@puzzle.first.user.last_name}" %>
+            <%= cl_image_tag(@puzzle.first.path, :class => "puzzle-img") %>
+            <span class="puzzle-title"><%= @puzzle.first.user.username %></span>
+            <span class="puzzle-author"><%= @puzzle.first.title %> |&nbsp;</span>
           </label>
         </div>
 
@@ -41,8 +42,9 @@
               <input type="radio" class="puzzle-name" id="<%= p.id %>" name="puzzle-title" value="<%= p.title %>">
 
               <label class="puzzle-label" for="<%= p.id %>">
-                <%= cl_image_tag(p.path, :width => 40, :crop => :fill) %>
-                <%= "#{p.title} | #{p.user.first_name} #{p.user.last_name}" %>
+                <%= cl_image_tag(p.path, :class => "puzzle-img") %>
+                <span class="puzzle-author"><%= p.user.username %></span>
+                <span class="puzzle-title"><%= p.title %> |&nbsp;</span>
               </label>
             </div>
 
@@ -57,7 +59,9 @@
           <option value="9">9 x 9</option>
       </select>
 
-      <%= link_to("Play!", "#{puzzles_path}/#{@puzzle.first.title}/3", :class => "btn btn-primary", :id => "puzzle-play", "data-title" => "#{@puzzle.first.title}", "data-path" => "#{puzzles_path}", "data-size" => "3"  ) %>
+      <%= 
+        link_to("Play!", "#{puzzles_path}/#{@puzzle.first.title}/3", :class => "btn btn-primary", :id => "puzzle-play", "data-title" => "#{@puzzle.first.title}", "data-path" => "#{puzzles_path}", "data-size" => "3"  )
+      %>
   </form>
 
 <% else %>

@@ -11,9 +11,10 @@ Rails.application.routes.draw do
   get "/users/edit" => "users#edit"
   get "/users/:id/puzzles/" => "users#show_puzzles"
 
-  resources :puzzles, :except => [:edit]
+  resources :puzzles, :except => [:edit, :show, :update]
   get "/puzzles/:title/:size" => "puzzles#show"
 
-  resources :scores
+  post "/scores/create" => "scores#create"
+  get "/scores/leaderboard" => "scores#index"
 
 end

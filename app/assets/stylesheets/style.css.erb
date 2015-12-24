@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Syncopate:400,700);
+
 * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -10,6 +12,7 @@ body, html {
 
 body {
     height: 100%;
+    font-family: "verdana";
     margin: 0;
     padding: 0;
     background-image: url(<%= image_path("jigsaw_puzzle.svg") %>);
@@ -17,8 +20,22 @@ body {
 }
 
 h1, h2 {
+    font-family: 'Syncopate', sans-serif;
+    font-weight: bold;
     text-align: center;
+    color: white;
+
+    text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+
     margin-bottom: 1em;
+}
+
+.alert-danger {
+    display: none;
 }
 
 .center-block {
@@ -44,8 +61,9 @@ h1, h2 {
 }
 
 .brand-link {
+    font-family: 'Syncopate', sans-serif;
+    font-size: 1em;
     color: #000;
-    font-size: 1.5em;
 }
 
 .brand-link:hover {
@@ -99,14 +117,10 @@ h1, h2 {
 }
 
 #puzzles {
-    height: 150px;
+    height: 250px;
     border: 3px solid black;
     overflow: scroll;
     background-color: #FFF;
-}
-
-#puzzles img {
-    display: inline;
 }
 
 .puzzle-label {
@@ -116,6 +130,20 @@ h1, h2 {
     line-height: 40px;
     vertical-align: middle;
     border-bottom: 1px solid #333;
+}
+
+.puzzle-img {
+    max-height: 40px;
+    max-width: 80px;
+    float: left;
+}
+
+.puzzle-title {
+    float: right;
+}
+
+.puzzle-author {
+    float: right;
 }
 
 #puzzles input[type=radio] {
@@ -133,4 +161,17 @@ h1, h2 {
 
 #puzzle-play {
     float: right;
+}
+
+#puzzle-score {
+    float: right;
+}
+
+.table-bordered {
+    width: 400px;
+    margin: auto;
+}
+
+.table-bordered th {
+    background-color: rgb(200, 225, 255);
 }

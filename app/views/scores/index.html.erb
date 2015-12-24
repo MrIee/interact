@@ -1,0 +1,19 @@
+<h1>Scoreboard</h1>
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <tr><th>User</th><th>Puzzle</th><th>Size</th><th>Time</th></tr>
+        <% @scores.each do|score| %>
+            <%
+                puzzle = Puzzle.find score.puzzle_id
+                user = User.find score.user_id
+            %>
+            <tr>
+                <td><%= user.username %></td>
+                <td><%= puzzle.title %></td>
+                <td><%= "#{score.puzzle_size} x #{score.puzzle_size}" %></td>
+                <td><%= score.puzzle_score %></td>
+            <tr>
+        <% end %>
+    </table>
+</div>

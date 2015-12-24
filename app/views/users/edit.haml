@@ -1,7 +1,7 @@
 - if @user.errors.any?
-    %ul
+    %ul.dotless-list
         - @user.errors.full_messages.each do |msg|
-            %li=msg
+            %li{:class => "alert alert-danger", :role => "alert"}=msg
 
 = form_for @user, :html => { :class => "col-md-3 center-block" } do |f|
     %div.form-group
@@ -16,4 +16,4 @@
     %div.form-group
         = f.label :password, "New Password"
         = f.password_field :password, :required => true, :class => "form-control"
-    = f.submit :class => "btn btn-primary"
+    = f.submit "Update", :class => "btn btn-primary"

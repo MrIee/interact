@@ -1,7 +1,7 @@
 - if @puzzle.errors.any?
-    %ul
+    %ul.dotless-list
         - @puzzle.errors.full_messages.each do |msg|
-            %li=msg
+            %li{:class => "alert alert-danger", :role => "alert"}=msg
 
 = form_for @puzzle, :html => { :class => "col-md-3 center-block", :multipart => true } do |f|
     %div.form-group
