@@ -7,6 +7,8 @@
 #  height     :integer
 #  width      :integer
 #  path       :text
+#  public_id  :text
+#  user_id    :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

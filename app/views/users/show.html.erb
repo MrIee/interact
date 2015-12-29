@@ -1,8 +1,8 @@
-<%= image_tag(@current_user.profile_picture, :class => "center-image profile-picture") %>
-<h1>Your Puzzles</h1>
+<%= image_tag(@user.profile_picture, :class => "center-image profile-picture") %>
+<h1><%= @user.username %>'s Puzzles</h1>
     <%
         count = 0
-        @puzzle.each do |p|
+        @user.puzzles.each do |p|
 
             if count == 0
                 %> <div class="row"> <%
@@ -21,7 +21,6 @@
                     </select>
                     <%= link_to("Play!", "#{puzzles_path}/#{p.title}/3", :class => "btn btn-primary my-puzzle-play", :id => "#{p.id}", "data-path" => "#{puzzles_path}/#{p.title}", "data-size" => "3"  ) %>
                 </li>
-                 <li><%= link_to "Delete Puzzle", "/puzzles/#{p.id}", :method => :delete, :data => { :confirm => "Are you sure?"} %></li>
             </ul>
         </div>
     <%

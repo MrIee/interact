@@ -1,90 +1,105 @@
-$(document).ready(function() {
-    $(".alert-danger").fadeIn();
-});
+var rand = function(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 var PuzzlesController = Paloma.controller('Puzzles');
 var UsersController = Paloma.controller('Users');
 
 PuzzlesController.prototype.show = function(){
+    var ruby = this;
 
     $("#timer").timer({
         format: "%M:%S"
     });
 
-    var runPuzzle = function (image, size) {
+    var Puzzle = {
+        canvas: $("#canvas-pieces"),
+        imagePath: "url(" + ruby.params['url'] + ")",
+        size: ruby.params["size"],
+        gridSize: ruby.params["size"] * ruby.params["size"],
+        pieceScore: 0,
 
-        //=============== Shuffle puzzle pieces ===============
-        var rand = function(min, max) {
-          return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
+        run: function() {
+            console.log(this.gridSize)
+            //============== create puzzle and board pieces ===============
+            this.createPieces();
+            this.createBoard();
+            this.makePuzzleDraggable();
+            this.makePuzzleDropzones();
+        },
 
-        // var size = $( "#grid-size" ).val();
-        gridSize = size * size;
-        pieceScore = 0;
+        createPieces: function() {
 
-        // var image = "url(/assets/batman-logo/Batman-Logo.gif)";
-        // image = image || "url( <%#= asset_path 'Batman-Logo.gif' %> )";
+            var canvasPos = this.canvas.position();
+            var canvasHeight = this.canvas.height();
+            var canvasWidth = this.canvas.width();
+            var randTop, randLeft = 0;
 
-        var canvas = $("#canvas-pieces").position();
-        var canvasHeight = $("#canvas-pieces").height();
-        var canvasWidth = $("#canvas-pieces").width();
-        var randTop, randLeft = 0
+            for (var i = 0; i < this.size; i++ ) {
 
-        //============== create puzzle and board pieces ===============
-        for (var i = 0; i < size; i++ ) {
+                for (var j = 0; j < this.size; j++ ) {
 
-            for (var j = 0; j < size; j++ ) {
+                    var $puzzlePiece = $("<div/>");
+                    $puzzlePiece.addClass("puzzle-piece")
+                    $puzzlePiece.attr("data-position", i + "" + j);
+                    $puzzlePiece.attr("data-placed", false);
 
-                var $puzzlePiece = $("<div/>");
-                $puzzlePiece.addClass("puzzle-piece")
-                $puzzlePiece.attr("data-position", i + "" + j);
-                $puzzlePiece.attr("data-placed", false);
+                    $puzzlePiece.width( Math.ceil( canvasWidth / this.size ) );
+                    $puzzlePiece.height( Math.ceil( canvasHeight / this.size ) );
 
-                $puzzlePiece.width( Math.ceil( canvasWidth / size ) );
-                $puzzlePiece.height( Math.ceil( canvasHeight / size ) );
+                    randTop = Math.floor(rand(canvasPos.top, canvasHeight - $puzzlePiece.height() ) );
+                    randLeft = Math.floor(canvasPos.left + rand(canvasPos.left, canvasWidth - $puzzlePiece.width() ) );
 
-                randTop = Math.floor(rand(canvas.top, canvasHeight - $puzzlePiece.height() ) );
-                randLeft = Math.floor(canvas.left + rand(canvas.left, canvasWidth - $puzzlePiece.width() ) );
+                    $puzzlePiece.css({
+                        position: "absolute",
+                        backgroundImage: this.imagePath,
 
-                $puzzlePiece.css({
-                    position: "absolute",
-                    backgroundImage: image,
+                        backgroundPosition: Math.ceil( -j * (canvasWidth / this.size) ) + "px " + Math.ceil( -i * (canvasHeight / this.size) ) + "px",
 
-                    backgroundPosition: Math.ceil( -j * (canvasWidth / size) ) + "px " + Math.ceil( -i * (canvasHeight / size) ) + "px",
+                        transform: "translate(" + randLeft + "px, " + randTop + "px)",
+                        zIndex: 10
+                    });
 
-                    transform: "translate(" + randLeft + "px, " + randTop + "px)",
-                    zIndex: 10
-                });
+                    $puzzlePiece[0].setAttribute("data-x", randLeft);
+                    $puzzlePiece[0].setAttribute("data-y", randTop);
 
-                $puzzlePiece[0].setAttribute("data-x", randLeft);
-                $puzzlePiece[0].setAttribute("data-y", randTop);
-
-                $("#canvas-pieces").append($puzzlePiece);
-
-
-                var $boardPiece = $("<div/>");
-                $boardPiece.addClass("dropzone");
-                $boardPiece.attr("data-position", i + "" + j);
-
-                $boardPiece.width( Math.floor( canvasWidth / size ) );
-                $boardPiece.height( Math.floor( canvasHeight / size ) );
-                $boardPiece.css({
-                    opacity: "0.1",
-                    position: "absolute",
-                    backgroundImage: image,
-
-                    backgroundPosition: Math.ceil( -j * (canvasWidth / size) ) + "px " + Math.ceil( -i * (canvasHeight / size) ) + "px",
-
-                    transform: "translate(" + Math.ceil( j * (canvasWidth / size) + canvasWidth ) + "px, " + Math.ceil( i * (canvasHeight / size) ) + "px)"
-                });
-
-                $("#canvas-pieces").append($boardPiece);
+                    this.canvas.append($puzzlePiece);
+                }
             }
+        },
 
-        }
+        createBoard: function() {
+
+            var canvasHeight = this.canvas.height();
+            var canvasWidth = this.canvas.width();
+
+            for (var i = 0; i < this.size; i++ ) {
+
+                for (var j = 0; j < this.size; j++ ) {
+
+                    var $boardPiece = $("<div/>");
+                    $boardPiece.addClass("dropzone");
+                    $boardPiece.attr("data-position", i + "" + j);
+
+                    $boardPiece.width( Math.floor( canvasWidth / this.size ) );
+                    $boardPiece.height( Math.floor( canvasHeight / this.size ) );
+                    $boardPiece.css({
+                        opacity: "0.1",
+                        position: "absolute",
+                        backgroundImage: this.imagePath,
+
+                        backgroundPosition: Math.ceil( -j * (canvasWidth / this.size) ) + "px " + Math.ceil( -i * (canvasHeight / this.size) ) + "px",
+
+                        transform: "translate(" + Math.ceil( j * (canvasWidth / this.size) + canvasWidth ) + "px, " + Math.ceil( i * (canvasHeight / this.size) ) + "px)"
+                    });
+
+                    this.canvas.append($boardPiece);
+                }
+            }
+        },
 
         //================ Drag Move ==================
-        var dragMoveListener = function(event) {
+        dragMoveListener: function(event) {
             var target = event.target,
                 // keep the dragged position in the data-x/data-y attributes
                 x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
@@ -97,10 +112,10 @@ PuzzlesController.prototype.show = function(){
             // update the posiion attributes
             target.setAttribute('data-x', x);
             target.setAttribute('data-y', y);
-        }
+        },
 
-        interact(".puzzle-piece")
-            .draggable({
+        makePuzzleDraggable: function() {
+            interact(".puzzle-piece").draggable({
                 inertia: true,
                 restrict: {
                     restriction: "#canvas",
@@ -108,68 +123,70 @@ PuzzlesController.prototype.show = function(){
                 },
 
                 autoScroll: true,
-                onmove: dragMoveListener
+                onmove: this.dragMoveListener
             });
-
-        // this is used later in the resizing and gesture demos
-          window.dragMoveListener = dragMoveListener;
+        },
 
         //============== Drop Zone ===============
-        interact('.dropzone').dropzone({
-            // only accept elements matching this CSS selector
-            accept: '.puzzle-piece',
-            // Require a 50% element overlap for a drop to be possible
-            overlap: 0.5,
+        makePuzzleDropzones: function() {
+            var puzzle = this;
 
-            // listen for drop related events:
-            ondragenter: function (event) {
-                var draggableElement = event.relatedTarget,
-                    dropzoneElement = event.target;
-                dropzoneElement.classList.add('dropzone-hover-bg');
-            },
-            ondragleave: function (event) {
-                var draggableElement = event.relatedTarget,
-                    dropzoneElement = event.target;
-                dropzoneElement.classList.remove('dropzone-hover-bg');
-            },
-            ondrop: function (event) {
-                var draggableElement = event.relatedTarget,
-                    dropzoneElement = event.target;
+            interact('.dropzone').dropzone({
+                // only accept elements matching this CSS selector
+                accept: '.puzzle-piece',
+                // Require a 50% element overlap for a drop to be possible
+                overlap: 0.5,
 
-                $(draggableElement).css("transform",  $(dropzoneElement).css("transform"));
+                // listen for drop related events:
+                ondragenter: function (event) {
+                    var draggableElement = event.relatedTarget,
+                        dropzoneElement = event.target;
+                    dropzoneElement.classList.add('dropzone-hover-bg');
+                },
+                ondragleave: function (event) {
+                    var draggableElement = event.relatedTarget,
+                        dropzoneElement = event.target;
+                    dropzoneElement.classList.remove('dropzone-hover-bg');
+                },
+                ondrop: function (event) {
+                    var draggableElement = event.relatedTarget,
+                        dropzoneElement = event.target;
 
-                if ( $(draggableElement).attr("data-position") === $(dropzoneElement).attr("data-position") ) {
+                    $(draggableElement).css("transform",  $(dropzoneElement).css("transform"));
 
-                    if ( $(draggableElement).hasClass("placed") ) { return };
+                    if ( $(draggableElement).attr("data-position") === $(dropzoneElement).attr("data-position") ) {
 
-                    $(draggableElement).addClass("placed");
-                    $(draggableElement).removeClass("puzzle-piece");
-                    $(dropzoneElement).removeClass("dropzone-hover-bg");
-                    $(dropzoneElement).addClass("dropzone-correct-bg");
-                    pieceScore++;
+                        if ( $(draggableElement).hasClass("placed") ) { return };
 
-                    if (pieceScore === gridSize) {
-                        $("#timer").timer("pause");
-                        $("#time").html( $("#timer").html() );
-                        $("#puzzle_score").val( $("#timer").html() );
-                        $('#winModal').modal('show');
+                        $(draggableElement).addClass("placed");
+                        $(draggableElement).removeClass("puzzle-piece");
+                        $(dropzoneElement).removeClass("dropzone-hover-bg");
+                        $(dropzoneElement).addClass("dropzone-correct-bg");
+                        puzzle.pieceScore++;
+                        console.log(puzzle.gridSize);
+                        if (puzzle.pieceScore === puzzle.gridSize) {
+                            puzzle.puzzleWin();
+                        }
                     }
+                },
+                ondropdeactivate: function (event) {
+                    var draggableElement = event.relatedTarget,
+                        dropzoneElement = event.target;
                 }
-            },
-            ondropdeactivate: function (event) {
-                var draggableElement = event.relatedTarget,
-                    dropzoneElement = event.target;
-            }
-        });
+            });
+        },
 
+        puzzleWin: function() {
+            $("#timer").timer("pause");
+            $("#time").html( $("#timer").html() );
+            $("#puzzle_score").val( $("#timer").html() );
+            $('#winModal').modal('show');
+        }
     };
 
-    var url = this.params["url"];
-    var size = this.params["size"];
-
-
+    
     $("#puzzle-goBack").on("click", function() {
-            $(location).attr( "href", $("#puzzle-goBack").attr("data-backUrl") )
+        $(location).attr( "href", $("#puzzle-goBack").attr("data-backUrl") );
     });
 
     $("#puzzle-reload").on("click", function() {
@@ -177,14 +194,14 @@ PuzzlesController.prototype.show = function(){
     });
 
     $(document).ready(function() {
-        runPuzzle( "url(" + url + ")", size );
+        Puzzle.run();
     });
     
 };
 
 
 PuzzlesController.prototype.index = function(){
-   $play = $("#puzzle-play");
+    $play = $("#puzzle-play");
 
     $("input:radio[name='puzzle-title']").on("change", function() {
         $play.attr("data-title", $(this).val() );
@@ -205,14 +222,16 @@ UsersController.prototype.show_puzzles = function(){
         var $play = $(this);
 
         $( "#grid-size-" + $play.attr("id") ).on("change", function() {
-            $play.attr("data-size", $(this).val() );
-
-            
+            $play.attr( "data-size", $(this).val() );
         });
 
         $play.on("mouseenter", function(event) {
-            $(this).attr("href", $(this).attr("data-path") + "/" + $(this).attr("data-size") );
+            $play.attr("href", $play.attr("data-path") + "/" + $play.attr("data-size") );
         });
 
     });
 };
+
+$(document).ready(function() {
+    $(".alert-danger").fadeIn();
+});

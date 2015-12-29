@@ -34,6 +34,10 @@ h1, h2 {
     margin-bottom: 1em;
 }
 
+table {
+    background-color: white;
+}
+
 .alert-danger {
     display: none;
 }
@@ -43,17 +47,46 @@ h1, h2 {
     margin: 0 auto;
 }
 
-.dotless-list ul {
-    list-style: none;
-    margin-bottom: 1em;
+.center-text {
+    text-align: center;
 }
 
-.dotless-list li {
+.center-image {
+    display: block;
+    margin: auto;
+}
+
+.col-no-pad {
+    padding: 0;
+}
+
+.dotless-list, .user-puzzles-list {
     list-style: none;
+}
+
+.dotless-list li, .user-puzzles-list li {
+    text-align: center;
+    list-style: none;
+    margin-bottom: 0.75em;
+}
+
+.user-puzzles-list {
+    margin: 0;
+    padding: 0;
+    margin-bottom: 2em;
 }
 
 .list-title {
-    font-size: 2em;
+    font-weight: bold;
+}
+
+.profile-picture {
+    position: relative;
+    display: block;
+    border: 6px solid white;
+    box-shadow: 0 0 0 3px hsl(0, 0%, 0%);
+    border-radius: 15px;
+    margin-bottom: 5px;
 }
 
 #container {
@@ -146,6 +179,10 @@ h1, h2 {
     float: right;
 }
 
+.puzzle-author-picture {
+    max-height: 40px;
+}
+
 #puzzles input[type=radio] {
     display: none;
 }
@@ -165,11 +202,6 @@ h1, h2 {
 
 #puzzle-score {
     float: right;
-}
-
-.table-bordered {
-    width: 400px;
-    margin: auto;
 }
 
 .table-bordered th {

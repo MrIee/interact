@@ -42,6 +42,8 @@ ActiveRecord::Schema.define(version: 20151217012942) do
     t.text     "email"
     t.text     "username"
     t.text     "password_digest"
+    t.text     "profile_picture"
+    t.text     "public_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end

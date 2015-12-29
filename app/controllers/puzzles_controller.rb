@@ -1,13 +1,21 @@
 class PuzzlesController < ApplicationController
     before_action :check_if_logged_in, :only => [:new]
 
+    def index
+        if params[:filter] && params[:s]
+            if params[:filter] == "username"
+                @puzzle = Puzzle.joins(:user).where("#{params[:filter]} ILIKE ?", "%#{params[:s]}%")
+            else
+                @puzzle = Puzzle.where("#{params[:filter]} ILIKE ?", "%#{params[:s]}%")
+            end
+        else
+            @puzzle = Puzzle.all
+        end
+    end
+
     def show
         @puzzle = Puzzle.find_by :title => params[:title]
         js :url => @puzzle.path, :size => params[:size]
-    end
-
-    def index
-        @puzzle = Puzzle.all
     end
 
     def new
@@ -15,7 +23,7 @@ class PuzzlesController < ApplicationController
     end
 
     def create
-        req = Cloudinary::Uploader.upload(params[:file], :width => 600, :crop => :limit)
+        req = Cloudinary::Uploader.upload(params[:file], :width => 600, :height => 400, :crop => :limit)
         
         puzzle_details = puzzle_params
         puzzle_details[:user_id] = @current_user.id

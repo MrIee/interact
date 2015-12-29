@@ -18,6 +18,18 @@
 
 <h1>Choose a Puzzle and Hit Play!</h1>
 
+<form method="GET" action="<%= root_path %>" class="row col-md-4 center-block">
+  <div class="col-no-pad col-xs-6">
+      <input type="text" name="s" id="search" class="form-control" />
+  </div>
+  <div class="col-no-pad col-xs-3">
+      <select name="filter" class="form-control">
+          <option value="username">Username</option>
+          <option value="title">Puzzle</option>
+      </select>
+  </div>
+  <input type="submit" value="Search" class="col-xs-3 btn btn-primary" />
+</form>
 <% if !@puzzle.empty? %>
 
   <form class="col-md-6 center-block" id="select-puzzle-form">
@@ -28,8 +40,14 @@
 
           <label class="puzzle-label" for="<%= @puzzle.first.id %>">
             <%= cl_image_tag(@puzzle.first.path, :class => "puzzle-img") %>
-            <span class="puzzle-title"><%= @puzzle.first.user.username %></span>
-            <span class="puzzle-author"><%= @puzzle.first.title %> |&nbsp;</span>
+            <span class="puzzle-author">
+              <%= link_to "#{users_path}/view/#{@puzzle.first.user.id}" do %>
+                <%= @puzzle.first.user.username %>
+                <%= image_tag(@puzzle.first.user.profile_picture, :class => "puzzle-author-picture") %>
+              <% end %>
+                </span>
+            <span class="puzzle-title"><%= @puzzle.first.title %> |&nbsp;
+            </span>
           </label>
         </div>
 
@@ -43,8 +61,13 @@
 
               <label class="puzzle-label" for="<%= p.id %>">
                 <%= cl_image_tag(p.path, :class => "puzzle-img") %>
-                <span class="puzzle-author"><%= p.user.username %></span>
-                <span class="puzzle-title"><%= p.title %> |&nbsp;</span>
+                <span class="puzzle-author">
+                  <%= link_to "#{users_path}/view/#{p.user.id}" do %>
+                    <%= p.user.username %>
+                    <%= image_tag(p.user.profile_picture, :class => "puzzle-author-picture") %>
+                  <% end %>
+                </span>
+                <span class="puzzle-title"><%= p.title %> |&nbsp </span>
               </label>
             </div>
 
@@ -66,6 +89,6 @@
 
 <% else %>
 
-  <h2>No Puzzles to Display</h2>
+  <h3 class="center-text">No Puzzles to Display</h3>
 
 <% end %>

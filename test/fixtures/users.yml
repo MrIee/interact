@@ -6,7 +6,10 @@
 #  first_name      :text
 #  last_name       :text
 #  email           :text
+#  username        :text
 #  password_digest :text
+#  profile_picture :text
+#  public_id       :text
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
