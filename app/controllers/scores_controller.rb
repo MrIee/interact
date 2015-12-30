@@ -6,7 +6,7 @@ class ScoresController < ApplicationController
             elsif params[:filter] == "title"
                 @scores = Score.joins(:puzzle).where("#{params[:filter]} ILIKE ?", "%#{params[:s]}%").order(puzzle_size: :asc, puzzle_score: :asc)
             elsif params[:filter] == "puzzle_size"
-                @scores = Score.where("#{params[:filter]}": params[:s].to_i).order(puzzle_size: :asc, puzzle_score: :asc)
+                @scores = Score.where("#{params[:filter]}": (params[:s].to_i)).order(puzzle_size: :asc, puzzle_score: :asc)
             end
         else
             @scores = Score.all.order(puzzle_size: :asc, puzzle_score: :asc)
