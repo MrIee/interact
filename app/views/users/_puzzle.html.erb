@@ -1,0 +1,27 @@
+<%
+    if !@count
+        @count = 0
+    end
+
+    if @count == 0
+        %> <div class="row"> <%
+    end
+%>
+    <div class="col-md-3 col-sm-6">
+        <%= radio_button_tag("puzzle-title", puzzle.id, false, :value => puzzle.title, :id => puzzle.id, :class => "puzzle-radio") %>
+
+        <label class="puzzle-element" for="<%= puzzle.id %>">
+            <ul class="user-puzzles-list">
+                <li class="list-title"><%= puzzle.title %></li>
+                <li><%= cl_image_tag(puzzle.public_id, :width => 400, :crop => :limit, :class => "list-image") %></li>
+                 <li><%= link_to "Delete Puzzle", p, :method => :delete, :data => { :confirm => "Are you sure?"} %></li>
+            </ul>
+        </label>
+    </div>
+<%
+    @count += 1
+    if @count == 4 || puzzle == @puzzles.last
+        @count = 0
+        %> </div> <%
+    end
+%>

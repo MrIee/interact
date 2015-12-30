@@ -46,7 +46,7 @@ class PuzzlesController < ApplicationController
         puzzle.destroy
         Cloudinary::Uploader.destroy(puzzle[:public_id])
 
-        redirect_to("/users/#{@current_user.id}/puzzles")
+        redirect_to(users_puzzles_path)
     end
 
     private

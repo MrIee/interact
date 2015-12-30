@@ -1,0 +1,88 @@
+@import url(https://fonts.googleapis.com/css?family=Syncopate:400,700);
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "verdana";
+    margin: 0;
+    padding: 0;
+    background-image: url("bg.jpg");
+    background-attachment: fixed;
+}
+
+h1, h2 {
+    font-family: 'Syncopate', sans-serif;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+
+    text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+
+    margin-bottom: 1em;
+}
+
+table {
+    background-color: white;
+}
+
+.alert-danger {
+    display: none;
+}
+
+.center-block {
+    float: none;
+    margin: 0 auto;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.center-image {
+    display: block;
+    margin: auto;
+}
+
+.col-no-pad {
+    padding: 0;
+}
+
+.dotless-list{
+    list-style: none;
+
+    li {
+        text-align: center;
+        list-style: none;
+        margin-bottom: 0.75em;
+    }
+}
+
+.profile-picture {
+    position: relative;
+    display: block;
+    border: 6px solid white;
+    box-shadow: 0 0 0 3px hsl(0, 0%, 0%);
+    border-radius: 15px;
+    margin-bottom: 5px;
+}
+
+#container {
+    
+}
+
+.puzzle-radio {
+    display: none;
+}
+
+input[type=radio]:checked + .puzzle-element {
+    background-color: rgb(200, 225, 255);
+    border-radius: 10px;
+}

@@ -1,0 +1,35 @@
+#canvas {
+    position: absolute;
+}
+
+#canvas-pieces {
+    background-color: rgb(240, 240, 240);
+    position: absolute;
+    z-index: 1;
+}
+
+#canvas-puzzle {
+    background-color: rgb(200, 225, 255);
+    position: absolute;
+    right: 0;
+}
+
+.puzzle-piece {
+    position: absolute;
+    border: 3px solid black;
+}
+
+.dropzone-correct-bg {
+    background-color: green;
+}
+
+.dropzone-hover-bg {
+    background-color: darkblue;
+}
+
+#timer {
+    width: 150px;
+    font-size: 4em;
+    text-align: center;
+    margin: auto;
+}

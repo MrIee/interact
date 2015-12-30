@@ -19,6 +19,34 @@
 
 
 $(document).on('page:load', function(){
-   Paloma.executeHook();
-   Paloma.engine.start();
+    Paloma.executeHook();
+    Paloma.engine.start();
+
+    if ($('.pagination').length) {
+
+        $(window).scroll(function() {
+            var url = $('.pagination .next_page a').attr('href');
+            if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 100) {
+                
+                $('.pagination').html('<img src="/assets/ajax-loader.gif" alt="Loading..." title="Loading..." />')
+                return $.getScript(url);
+            }
+        });
+        return $(window).scroll();
+    }
+});
+
+$(document).ready(function(){
+    if ($('.pagination').length) {
+
+        $(window).scroll(function() {
+            var url = $('.pagination .next_page a').attr('href');
+            if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 100) {
+                
+                $('.pagination').html('<img src="/assets/ajax-loader.gif" alt="Loading..." title="Loading..." />')
+                return $.getScript(url);
+            }
+        });
+        return $(window).scroll();
+    }
 });

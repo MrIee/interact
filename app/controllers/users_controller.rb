@@ -57,7 +57,11 @@ class UsersController < ApplicationController
   end
 
   def show_puzzles
-    @puzzle = @current_user.puzzles
+    @puzzles = @current_user.puzzles.paginate(page: params[:page])
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   private

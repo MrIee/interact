@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
 
   before_action :fetch_user
 
+  WillPaginate.per_page = 12
+
   private
   def fetch_user
     if session[:user_id].present?

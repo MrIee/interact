@@ -1,0 +1,7 @@
+$('#user-puzzles').append('<%= escape_javascript render :partial => "puzzle", :collection => @puzzles %>');
+<% if @puzzles.next_page %>
+    $('.pagination').replaceWith('<%= escape_javascript will_paginate @puzzles %>');
+<% else %>
+    $(window).off('scroll');
+    $('.pagination').remove();
+<% end %>

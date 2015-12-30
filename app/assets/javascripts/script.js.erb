@@ -2,6 +2,22 @@ var rand = function(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+var playPuzzle = function() {
+    $play = $("#puzzle-play-btn");
+
+    $("input:radio[name='puzzle-title']").on("change", function() {
+        $play.attr("data-title", $(this).val() );
+    });
+
+    $("#grid-size").on("change", function() {
+        $play.attr("data-size", $(this).val() );
+    });
+
+    $play.on("mouseenter", function(event) {
+        $(this).attr("href", $(this).attr("data-path") + "/" + $(this).attr("data-title") + "/" + $(this).attr("data-size") );
+    });
+}
+
 var PuzzlesController = Paloma.controller('Puzzles');
 var UsersController = Paloma.controller('Users');
 
@@ -199,37 +215,12 @@ PuzzlesController.prototype.show = function(){
     
 };
 
-
 PuzzlesController.prototype.index = function(){
-    $play = $("#puzzle-play");
-
-    $("input:radio[name='puzzle-title']").on("change", function() {
-        $play.attr("data-title", $(this).val() );
-    });
-
-    $("#grid-size").on("change", function() {
-        $play.attr("data-size", $(this).val() );
-    });
-
-    $play.on("mouseenter", function(event) {
-        $(this).attr("href", $(this).attr("data-path") + "/" + $(this).attr("data-title") + "/" + $(this).attr("data-size") );
-    });
+    playPuzzle();
 };
 
 UsersController.prototype.show_puzzles = function(){
-    $(".my-puzzle-play").each(function() {
-
-        var $play = $(this);
-
-        $( "#grid-size-" + $play.attr("id") ).on("change", function() {
-            $play.attr( "data-size", $(this).val() );
-        });
-
-        $play.on("mouseenter", function(event) {
-            $play.attr("href", $play.attr("data-path") + "/" + $play.attr("data-size") );
-        });
-
-    });
+    playPuzzle();
 };
 
 $(document).ready(function() {
