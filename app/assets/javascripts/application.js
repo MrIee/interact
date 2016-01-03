@@ -47,7 +47,7 @@ var will_infiniteScroll = function() {
     var url = $('.pagination .next_page a').attr('href');
         if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 100) {
             
-            $('.pagination').html('<img src="/assets/ajax-loader.gif" alt="Loading..." title="Loading..." />')
+            $('.pagination').html('<%= image_path("/assets/ajax-loader.gif" :alt => "Loading...", :title => "Loading...") %>')
             return $.getScript(url);
         }
 }
