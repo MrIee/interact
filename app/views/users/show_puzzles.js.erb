@@ -2,6 +2,9 @@ $('#user-puzzles').append('<%= escape_javascript render :partial => "puzzle", :c
 <% if @puzzles.next_page %>
     $('.pagination').replaceWith('<%= escape_javascript will_paginate @puzzles %>');
 <% else %>
-    $(window).off('scroll');
+    $(window).off('scroll', will_infiniteScroll);
     $('.pagination').remove();
 <% end %>
+
+playPuzzle();
+checkDeleteBox();

@@ -2,22 +2,6 @@ var rand = function(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-var playPuzzle = function() {
-    $play = $("#puzzle-play-btn");
-
-    $("input:radio[name='puzzle-title']").on("change", function() {
-        $play.attr("data-title", $(this).val() );
-    });
-
-    $("#grid-size").on("change", function() {
-        $play.attr("data-size", $(this).val() );
-    });
-
-    $play.on("mouseenter", function(event) {
-        $(this).attr("href", $(this).attr("data-path") + "/" + $(this).attr("data-title") + "/" + $(this).attr("data-size") );
-    });
-}
-
 var PuzzlesController = Paloma.controller('Puzzles');
 var UsersController = Paloma.controller('Users');
 
@@ -36,7 +20,6 @@ PuzzlesController.prototype.show = function(){
         pieceScore: 0,
 
         run: function() {
-            console.log(this.gridSize)
             //============== create puzzle and board pieces ===============
             this.createPieces();
             this.createBoard();
@@ -45,7 +28,6 @@ PuzzlesController.prototype.show = function(){
         },
 
         createPieces: function() {
-
             var canvasPos = this.canvas.position();
             var canvasHeight = this.canvas.height();
             var canvasWidth = this.canvas.width();
@@ -57,6 +39,7 @@ PuzzlesController.prototype.show = function(){
 
                     var $puzzlePiece = $("<div/>");
                     $puzzlePiece.addClass("puzzle-piece")
+                    $puzzlePiece.attr("id", i + "" + j);
                     $puzzlePiece.attr("data-position", i + "" + j);
                     $puzzlePiece.attr("data-placed", false);
 
@@ -85,7 +68,6 @@ PuzzlesController.prototype.show = function(){
         },
 
         createBoard: function() {
-
             var canvasHeight = this.canvas.height();
             var canvasWidth = this.canvas.width();
 
@@ -128,6 +110,8 @@ PuzzlesController.prototype.show = function(){
             // update the posiion attributes
             target.setAttribute('data-x', x);
             target.setAttribute('data-y', y);
+
+            $(target).css("zIndex", 99);
         },
 
         makePuzzleDraggable: function() {
@@ -145,7 +129,6 @@ PuzzlesController.prototype.show = function(){
 
         //============== Drop Zone ===============
         makePuzzleDropzones: function() {
-            var puzzle = this;
 
             interact('.dropzone').dropzone({
                 // only accept elements matching this CSS selector
@@ -163,25 +146,33 @@ PuzzlesController.prototype.show = function(){
                     var draggableElement = event.relatedTarget,
                         dropzoneElement = event.target;
                     dropzoneElement.classList.remove('dropzone-hover-bg');
+
+                    if ($(dropzoneElement).attr("id") === $(draggableElement).attr("id") && $(dropzoneElement).hasClass("placed")) {
+                        $(dropzoneElement).removeClass("placed");
+                    }
                 },
                 ondrop: function (event) {
                     var draggableElement = event.relatedTarget,
                         dropzoneElement = event.target;
 
+                    if ( $(dropzoneElement).hasClass("placed") ) { return };
+
+                    $(dropzoneElement).addClass("placed");
+                    $(dropzoneElement).attr("id", $(draggableElement).attr("id"));
+
                     $(draggableElement).css("transform",  $(dropzoneElement).css("transform"));
+                    $(draggableElement).css("zIndex", 10);
+
 
                     if ( $(draggableElement).attr("data-position") === $(dropzoneElement).attr("data-position") ) {
 
-                        if ( $(draggableElement).hasClass("placed") ) { return };
-
-                        $(draggableElement).addClass("placed");
                         $(draggableElement).removeClass("puzzle-piece");
                         $(dropzoneElement).removeClass("dropzone-hover-bg");
                         $(dropzoneElement).addClass("dropzone-correct-bg");
-                        puzzle.pieceScore++;
-                        console.log(puzzle.gridSize);
-                        if (puzzle.pieceScore === puzzle.gridSize) {
-                            puzzle.puzzleWin();
+                        Puzzle.pieceScore++;
+
+                        if (Puzzle.pieceScore === Puzzle.gridSize) {
+                            Puzzle.puzzleWin();
                         }
                     }
                 },
@@ -219,8 +210,49 @@ PuzzlesController.prototype.index = function(){
     playPuzzle();
 };
 
+PuzzlesController.prototype.new = function(){
+    $("#new-puzzle-form").on("submit", function() {
+        $("#new-puzzle-form .btn").css("display", "none");
+        $("#loader").css("display", "block");
+    });
+};
+
 UsersController.prototype.show_puzzles = function(){
     playPuzzle();
+
+    $(document).ready(function() {
+
+        $("#delete-puzzles-model-btn").on("click", function() {
+            $('#deleteModal').modal('show');
+        });
+
+        $("#delete-puzzles-btn").on("click", function() {
+            $("#puzzle-delete-form").submit();
+        });
+
+        $("#toggleCheck").on('change', function() {
+            checkboxes = document.getElementsByName("delete[]");
+            
+            var deleteClass = "puzzle-delete-checked";
+            var $puzzleElement = $("<div/>");
+
+            for(var i=0; i<checkboxes.length; i++) {
+                checkboxes[i].checked = this.checked;
+                var $puzzleIdCheckbox = $("#puzzle" + checkboxes[i].getAttribute("data-num"));
+                $puzzleIdCheckbox.prop("checked", this.checked);
+
+                $puzzleElement = $("#puzzle-element-" + checkboxes[i].getAttribute("data-num"));
+
+                if (checkboxes[i].checked) {
+                    $puzzleElement.addClass(deleteClass);
+                }
+                else
+                    $puzzleElement.removeClass(deleteClass);
+            }
+        });
+
+        checkDeleteBox();
+    });
 };
 
 $(document).ready(function() {

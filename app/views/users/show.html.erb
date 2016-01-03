@@ -1,34 +1,42 @@
-<%= image_tag(@user.profile_picture, :class => "center-image profile-picture") %>
+<%= cl_image_tag(@user.public_id, :class => "center-image profile-picture") %>
 <h1><%= @user.username %>'s Puzzles</h1>
-    <%
-        count = 0
-        @user.puzzles.each do |p|
 
-            if count == 0
-                %> <div class="row"> <%
-            end
-    %>
-        <div class="col-md-3 col-sm-6">
-            <ul class="user-puzzles-list">
-                <li class="list-title"><%= p.title %></li>
-                <li><%= cl_image_tag(p.path, :height => 100, :crop => :fill) %></li>
-                <li>
-                    <select name="grid_size" class="form-control grid-size" id="grid-size-<%= p.id %>">
+<% if !@puzzle.empty? %>
+    <div class="row col-xs-12">
+        <div class="row col-xs-9 col-sm-5 col-md-4 fixed-menu">
+            <form method="GET" action="<%= @user.id %>" id="z">
+              <div class="col-no-pad col-xs-8">
+                  <input type="text" name="s" id="search" class="form-control" />
+              </div>
+              <input type="submit" value="Search" class="col-xs-4 btn btn-primary" />
+            </form>
+
+            <div class="col-xs-9 col-sm-7 center-block">
+                <div class="col-no-pad col-xs-7">
+                    <select name="grid_size" class="form-control" id="grid-size">
                         <option value="3">3 x 3</option>
                         <option value="5">5 x 5</option>
                         <option value="7">7 x 7</option>
                         <option value="9">9 x 9</option>
                     </select>
-                    <%= link_to("Play!", "#{puzzles_path}/#{p.title}/3", :class => "btn btn-primary my-puzzle-play", :id => "#{p.id}", "data-path" => "#{puzzles_path}/#{p.title}", "data-size" => "3"  ) %>
-                </li>
-            </ul>
+                </div>
+            <%= 
+                link_to("Play!", "#{puzzles_path}/#{@puzzle.first.title}/3", :class => "btn btn-primary col-xs-5", :id => "puzzle-play-btn", "data-title" => "#{@puzzle.first.title}", "data-path" => "#{puzzles_path}", "data-size" => "3"  )
+            %>
+            </div>
         </div>
-    <%
-        count += 1
-        if count == 4
-            count = 0
-            %> </div> <%
-        end
+    </div>
+      
+    <div id="user-puzzles">
+        <%= render @puzzle %>
+    </div>
 
-        end
-    %>
+    <div class="row">
+        <div id="infinite-scrolling" class="center-text">
+            <%= will_paginate @puzzle %>
+        </div>
+    </div>
+        
+<% else %>
+    <h3 class="center-text"><%= @user.username %> currently has no puzzles</h3>
+<% end %>

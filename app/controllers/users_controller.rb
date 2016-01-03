@@ -54,14 +54,32 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find params[:id]
-  end
 
-  def show_puzzles
-    @puzzles = @current_user.puzzles.paginate(page: params[:page])
+    if params[:s]
+      @puzzle = @user.puzzles.where("title ILIKE ?", "%#{params[:s]}%").paginate(page: params[:page])
+    else
+      @puzzle = @user.puzzles.paginate(page: params[:page])
+    end
+
     respond_to do |format|
       format.html
       format.js
     end
+
+  end
+
+  def show_puzzles
+    if params[:s]
+      @puzzles = @current_user.puzzles.where("title ILIKE ?", "%#{params[:s]}%").paginate(page: params[:page])
+    else
+      @puzzles = @current_user.puzzles.paginate(page: params[:page])
+    end
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
+
   end
 
   private

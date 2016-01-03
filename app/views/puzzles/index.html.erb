@@ -1,76 +1,47 @@
 <h1>Choose a Puzzle and Hit Play!</h1>
 
-<form method="GET" action="<%= root_path %>" class="row col-md-4 center-block">
-  <div class="col-no-pad col-xs-6">
-      <input type="text" name="s" id="search" class="form-control" />
-  </div>
-  <div class="col-no-pad col-xs-3">
-      <select name="filter" class="form-control">
-          <option value="username">Username</option>
-          <option value="title">Puzzle</option>
-      </select>
-  </div>
-  <input type="submit" value="Search" class="col-xs-3 btn btn-primary" />
-</form>
 <% if !@puzzle.empty? %>
+  <div class="row col-xs-12">
+    <div class="row col-xs-9 col-sm-5 col-md-4 fixed-menu">
+        <form method="GET" action="<%= root_path %>" id="z">
+          <div class="col-no-pad col-xs-5 col-sm-6">
+            <input type="text" name="s" id="search" class="form-control" />
+          </div>
+          <div class="col-no-pad col-xs-4 col-sm-3">
+            <select name="filter" class="form-control">
+              <option value="username">Username</option>
+              <option value="title">Puzzle Title</option>
+            </select>
+          </div>
+          <input type="submit" value="Search" class="col-xs-3 btn btn-primary" />
+        </form>
 
-  <form class="col-md-6 center-block" id="select-puzzle-form">
-      <div class="col-md-9" id="puzzles">
-        
-        <div>
-          <input type="radio" class="puzzle-name" id="<%= @puzzle.first.id %>" name="puzzle-title" value="<%= @puzzle.first.title %>" checked="true">
-
-          <label class="puzzle-label" for="<%= @puzzle.first.id %>">
-            <%= cl_image_tag(@puzzle.first.public_id, :height => 40, :crop => :limit) %>
-            <span class="puzzle-author">
-              <%= link_to "#{users_path}/view/#{@puzzle.first.user.id}" do %>
-                <%= @puzzle.first.user.username %>
-                <%= cl_image_tag(@puzzle.first.user.public_id, :height => 40, :crop => :limit) %>
-              <% end %>
-                </span>
-            <span class="puzzle-title"><%= @puzzle.first.title %> |&nbsp;
-            </span>
-          </label>
-        </div>
-
-
-        <% 
-          puzzle_minus_first = @puzzle[1..@puzzle.length]
-          puzzle_minus_first.each do |p|
+        <div class="col-xs-9 col-sm-7 center-block">
+          <div class="col-no-pad col-xs-7">
+            <select name="grid_size" class="form-control" id="grid-size">
+              <option value="3">3 x 3</option>
+              <option value="5">5 x 5</option>
+              <option value="7">7 x 7</option>
+              <option value="9">9 x 9</option>
+            </select>
+          </div>
+        <%= 
+          link_to("Play!", "#{puzzles_path}/#{@puzzle.first.title}/3", :class => "btn btn-primary col-xs-5", :id => "puzzle-play-btn", "data-title" => "#{@puzzle.first.title}", "data-path" => "#{puzzles_path}", "data-size" => "3"  )
         %>
-            <div>
-              <input type="radio" class="puzzle-name" id="<%= p.id %>" name="puzzle-title" value="<%= p.title %>">
-
-              <label class="puzzle-label" for="<%= p.id %>">
-                 <%= cl_image_tag(p.public_id, :height => 40, :crop => :limit) %>
-                <span class="puzzle-author">
-                  <%= link_to "#{users_path}/view/#{p.user.id}" do %>
-                    <%= p.user.username %>
-                    <%= cl_image_tag(p.user.public_id, :height => 40, :crop => :limit) %>
-                  <% end %>
-                </span>
-                <span class="puzzle-title"><%= p.title %> |&nbsp </span>
-              </label>
-            </div>
-
-        <% end %>
-
+        </div>
       </div>
+    </div>
+        
+    <div id="user-puzzles">
+      <%= render @puzzle %>
+    </div>
 
-      <select name="grid_size" class="form-control grid-size" id="grid-size">
-          <option value="3">3 x 3</option>
-          <option value="5">5 x 5</option>
-          <option value="7">7 x 7</option>
-          <option value="9">9 x 9</option>
-      </select>
-
-      <%= 
-        link_to("Play!", "#{puzzles_path}/#{@puzzle.first.title}/3", :class => "btn btn-primary", :id => "puzzle-play-btn", "data-title" => "#{@puzzle.first.title}", "data-path" => "#{puzzles_path}", "data-size" => "3"  )
-      %>
-  </form>
-
+    <div class="row">
+      <div id="infinite-scrolling" class="center-text">
+        <%= will_paginate @puzzle %>
+      </div>
+    </div>
+        
 <% else %>
-
   <h3 class="center-text">No Puzzles to Display</h3>
-
 <% end %>

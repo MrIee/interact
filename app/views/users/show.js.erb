@@ -1,0 +1,9 @@
+$('#user-puzzles').append('<%= escape_javascript render @puzzle %>');
+<% if @puzzle.next_page %>
+    $('.pagination').replaceWith('<%= escape_javascript will_paginate @puzzle %>');
+<% else %>
+    $(window).off('scroll', will_infiniteScroll);
+    $('.pagination').remove();
+<% end %>
+
+playPuzzle();

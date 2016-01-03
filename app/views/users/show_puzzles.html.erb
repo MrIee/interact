@@ -1,36 +1,73 @@
-<%= cl_image_tag(@current_user.profile_picture, :class => "center-image profile-picture") %>
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header alert alert-danger">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Warning!</h4>
+            </div>
+            <div class="modal-body">
+                <p>You are about to delete your puzzle(s). This action can't be reversed, do you wish to proceed?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-danger" id="delete-puzzles-btn" data-dismiss="modal">Yes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<%= cl_image_tag(@current_user.public_id, :class => "center-image profile-picture") %>
+
 <h1>Your Puzzles</h1>
-    <%
-        if !@puzzles.empty?
 
-        %>
-            <div class="row">
-                <div class="col-xs-7 col-sm-3 col-md-2 center-block">
-                    <div class="col-no-pad col-xs-7">
-                        <select name="grid_size" class="form-control" id="grid-size">
-                            <option value="3">3 x 3</option>
-                            <option value="5">5 x 5</option>
-                            <option value="7">7 x 7</option>
-                            <option value="9">9 x 9</option>
-                        </select>
-                    </div>
-                <%= 
-                    link_to("Play!", "#{puzzles_path}/#{@puzzles.first.title}/3", :class => "btn btn-primary col-xs-5", :id => "puzzle-play-btn", "data-title" => "#{@puzzles.first.title}", "data-path" => "#{puzzles_path}", "data-size" => "3"  )
-                %>
+<% if !@puzzles.empty? %>
+    <div class="row col-xs-12">
+        <div class="row col-xs-9 col-sm-5 col-md-4 fixed-menu">
+            <form method="GET" action="<%= users_puzzles_path %>" id="z">
+                <div class="col-no-pad col-xs-8">
+                    <input type="text" name="s" id="search" class="form-control" />
                 </div>
-            </div>
-            
-            <div id="user-puzzles">
-                <%= render :partial => "puzzle", :collection => @puzzles %>
-            </div>
+                <input type="submit" value="Search" class="col-xs-4 btn btn-primary" />
+            </form>
 
-                <div class="row">
-                    <div id="infinite-scrolling" class="center-text">
-                        <%= will_paginate @puzzles %>
-                    </div>
+            <div class="col-xs-9 col-sm-7 center-block">
+                <div class="col-no-pad col-xs-7">
+                    <select name="grid_size" class="form-control" id="grid-size">
+                        <option value="3">3 x 3</option>
+                        <option value="5">5 x 5</option>
+                        <option value="7">7 x 7</option>
+                        <option value="9">9 x 9</option>
+                    </select>
                 </div>
-            <%
-        else
-            %> <h3 class="center-text">You currently have no puzzles</h3> <%
-        end
-    %>
+            <%= 
+                link_to("Play!", "#{puzzles_path}/#{@puzzles.first.title}/3", :class => "btn btn-primary col-xs-5", :id => "puzzle-play-btn", "data-title" => "#{@puzzles.first.title}", "data-path" => "#{puzzles_path}", "data-size" => "3"  )
+            %>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-6 center-block center-text" id="select-all-check">
+        <%= check_box_tag("toggleCheck", "toggleCheck", false) %>
+        <label for="toggleCheck">Check/Uncheck all </label>
+
+        <%= button_tag("Delete Puzzle(s)", type: "button", :class => "btn btn-danger delete-btn", :id => "delete-puzzles-model-btn") %>
+    </div>
+
+    <%= form_tag(puzzles_delete_path, :method => "delete", :id => "puzzle-delete-form") do %>
+
+        <div id="user-puzzles">
+            <%= render :partial => "puzzle", :collection => @puzzles %>
+        </div>
+    <% end %>
+    <!-- </form> -->
+
+    <div class="row">
+        <div id="infinite-scrolling" class="center-text">
+            <%= will_paginate @puzzles %>
+        </div>
+    </div>
+
+<% else %>
+    <h3 class="center-text">You currently have no puzzles</h3>
+<% end %>

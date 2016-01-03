@@ -1,20 +1,42 @@
-.user-puzzles-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    margin-bottom: 2em;
+body.users.show .list-user{
+    display: none;
+}
 
-    li {
-        text-align: center;
-        list-style: none;
-        margin-bottom: 0.75em;
+body.users.show_puzzles .fixed-menu {
+    padding-bottom: 0;
+}
+
+body.users.show_puzzles .row:nth-child(1) > .col {
+    margin-top: 50px;
+}
+
+body.users.show_puzzles .navbar-fixed-menu-scroll {
+    padding-bottom: 5.5em;
+}
+
+#select-all-check {
+    margin-top: 1em;
+    z-index: 999;
+}
+
+.fixed-menu-scroll#select-all-check {
+    top: 65px;
+}
+
+.puzzle-delete {
+    color: red;
+}
+
+.puzzle-delete-checked {
+    border: 3px solid red;
+}
+
+@media (max-width: 768px) {
+    body.users.show_puzzles .row:nth-child(1) > .col:nth-child(-n+4) {
+        margin-top :0;
     }
-}
 
-.list-title {
-    font-weight: bold;
-}
-
-.list-image {
-    width: 80%;
+    body.users.show_puzzles .row:nth-child(1) > .col:first-child {
+        margin-top: 50px;
+    }
 }

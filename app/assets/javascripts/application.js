@@ -17,36 +17,78 @@
 //= require turbolinks
 //= require_tree .
 
+var playPuzzle = function() {
+    $play = $("#puzzle-play-btn");
+
+    $("input:radio[name='puzzle-title']").on("change", function() {
+        $play.attr("data-title", $(this).val() );
+    });
+
+    $("#grid-size").on("change", function() {
+        $play.attr("data-size", $(this).val() );
+    });
+
+    $play.on("mouseenter", function(event) {
+        $(this).attr("href", $(this).attr("data-path") + "/" + $(this).attr("data-title") + "/" + $(this).attr("data-size") );
+    });
+}
+
+var checkDeleteBox = function() {
+    $('.puzzle-delete-check').on('change', function() {
+        $("#puzzle-element-" + $(this).attr("data-num")).toggleClass("puzzle-delete-checked");
+
+        var $puzzleIdCheckbox = $("#puzzle" + $(this).attr("data-num"));
+        $puzzleIdCheckbox.prop("checked", !$puzzleIdCheckbox.prop("checked"));
+    });
+}
+
+
+var will_infiniteScroll = function() {
+    var url = $('.pagination .next_page a').attr('href');
+        if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 100) {
+            
+            $('.pagination').html('<img src="/assets/ajax-loader.gif" alt="Loading..." title="Loading..." />')
+            return $.getScript(url);
+        }
+}
+
+var will_paginate = function() {
+
+    if ($('.pagination').length) {
+
+        $(window).scroll(will_infiniteScroll);
+        return $(window).scroll();
+    }
+}
+
+var fixedOnScroll = function() {
+    var elementPosition = $('.fixed-menu').offset();
+
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > elementPosition.top - 10){
+            $(".fixed-menu").addClass("fixed-menu-scroll");
+            $("#select-all-check").addClass("fixed-menu-scroll");
+            $(".navbar").addClass("navbar-fixed-menu-scroll");
+            $(".brand-name").addClass("hide-brand-name");
+        }
+        else {
+            $(".fixed-menu").removeClass("fixed-menu-scroll");
+            $("#select-all-check").removeClass("fixed-menu-scroll");
+            $(".navbar").removeClass("navbar-fixed-menu-scroll");
+            $(".brand-name").removeClass("hide-brand-name");
+        }    
+    });
+}
 
 $(document).on('page:load', function(){
     Paloma.executeHook();
     Paloma.engine.start();
 
-    if ($('.pagination').length) {
-
-        $(window).scroll(function() {
-            var url = $('.pagination .next_page a').attr('href');
-            if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 100) {
-                
-                $('.pagination').html('<img src="/assets/ajax-loader.gif" alt="Loading..." title="Loading..." />')
-                return $.getScript(url);
-            }
-        });
-        return $(window).scroll();
-    }
+    will_paginate();
+    fixedOnScroll();
 });
 
 $(document).ready(function(){
-    if ($('.pagination').length) {
-
-        $(window).scroll(function() {
-            var url = $('.pagination .next_page a').attr('href');
-            if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 100) {
-                
-                $('.pagination').html('<img src="/assets/ajax-loader.gif" alt="Loading..." title="Loading..." />')
-                return $.getScript(url);
-            }
-        });
-        return $(window).scroll();
-    }
+    will_paginate();
+    fixedOnScroll();
 });

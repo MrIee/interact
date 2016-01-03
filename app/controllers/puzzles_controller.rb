@@ -1,15 +1,15 @@
 class PuzzlesController < ApplicationController
-    before_action :check_if_logged_in, :only => [:new]
+    before_action :check_if_logged_in, :only => [:new, :show]
 
     def index
         if params[:filter] && params[:s]
             if params[:filter] == "username"
-                @puzzle = Puzzle.joins(:user).where("#{params[:filter]} ILIKE ?", "%#{params[:s]}%")
+                @puzzle = Puzzle.joins(:user).where("#{params[:filter]} ILIKE ?", "%#{params[:s]}%").paginate(page: params[:page])
             else
-                @puzzle = Puzzle.where("#{params[:filter]} ILIKE ?", "%#{params[:s]}%")
+                @puzzle = Puzzle.where("#{params[:filter]} ILIKE ?", "%#{params[:s]}%").paginate(page: params[:page])
             end
         else
-            @puzzle = Puzzle.all
+            @puzzle = Puzzle.paginate(page: params[:page])
         end
     end
 
@@ -33,8 +33,10 @@ class PuzzlesController < ApplicationController
         puzzle_details[:public_id] = req["public_id"]
 
         @puzzle = Puzzle.new puzzle_details
+
         if @puzzle.save
-            redirect_to("/users/#{@current_user.id}/puzzles")
+
+            redirect_to("/users/puzzles")
         else
             Cloudinary::Uploader.destroy(req["public_id"])
             render :new
@@ -42,9 +44,10 @@ class PuzzlesController < ApplicationController
     end
 
     def destroy
-        puzzle = Puzzle.find params[:id]
-        puzzle.destroy
-        Cloudinary::Uploader.destroy(puzzle[:public_id])
+        puzzle = Puzzle.where(:id => params[:ids])
+        puzzle.destroy_all
+
+        Cloudinary::Api.delete_resources(params[:delete])
 
         redirect_to(users_puzzles_path)
     end

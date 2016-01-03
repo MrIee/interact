@@ -3,11 +3,12 @@
         - @puzzle.errors.full_messages.each do |msg|
             %li{:class => "alert alert-danger", :role => "alert"}=msg
 
-= form_for @puzzle, :html => { :class => "col-md-3 center-block", :multipart => true } do |f|
+= form_for @puzzle, :html => {:id => "new-puzzle-form", :class => "col-md-3 center-block", :multipart => true } do |f|
     %div.form-group
         = f.label :title
         = f.text_field :title, :required => true, :class => "form-control"
     %div.form-group
         = f.label :path
         = f.cl_image_upload :path, :html => { :required => "true", :class => "form-control" }
+        =image_tag("ajax-loader.gif", :id => "loader")
     = f.submit :class => "btn btn-primary"

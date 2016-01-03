@@ -12,8 +12,9 @@ Rails.application.routes.draw do
   get "/users/puzzles/" => "users#show_puzzles"
   get "/users/view/:id" => "users#show"
 
-  resources :puzzles, :except => [:edit, :show, :update]
+  resources :puzzles, :except => [:edit, :show, :update, :destroy]
   get "/puzzles/:title/:size" => "puzzles#show"
+  delete "/puzzles/delete" => "puzzles#destroy"
 
   post "/scores/create" => "scores#create"
   get "/leaderboard" => "scores#index"

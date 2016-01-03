@@ -1,0 +1,26 @@
+<%
+    if puzzle_counter % 4 == 0
+        %> <div class="row"> <%
+    end
+%>
+    <div class="col-md-3 col-sm-6">
+        <%= radio_button_tag("puzzle-title", puzzle.id, false, :checked => (puzzle == Puzzle.first), :value => puzzle.title, :id => puzzle.id, :class => "puzzle-radio") %>
+
+        <label class="puzzle-element" for="<%= puzzle.id %>">
+            <ul class="puzzles-list">
+                <li class="list-title"><%= puzzle.title %></li>
+                <li class="list-user">
+                    <%= link_to "#{users_path}/view/#{puzzle.user.id}" do %>
+                        <%= puzzle.user.username %>
+                        <%= cl_image_tag(puzzle.user.public_id, :height => 20, :crop => :limit) %>
+                    <% end %>
+                </li>
+                <li><%= cl_image_tag(puzzle.public_id, :width => 400, :crop => :limit, :class => "list-image") %></li>
+            </ul>
+        </label>
+    </div>
+<%
+    if (puzzle_counter + 1) % 4 == 0|| puzzle == @puzzle.last
+        %> </div> <%
+    end
+%>

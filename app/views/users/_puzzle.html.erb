@@ -1,27 +1,25 @@
 <%
-    if !@count
-        @count = 0
-    end
-
-    if @count == 0
+    if puzzle_counter % 4 == 0
         %> <div class="row"> <%
     end
 %>
-    <div class="col-md-3 col-sm-6">
-        <%= radio_button_tag("puzzle-title", puzzle.id, false, :value => puzzle.title, :id => puzzle.id, :class => "puzzle-radio") %>
+    <div class="col col-md-3 col-sm-6">
+        <%= radio_button_tag("puzzle-title", puzzle.id, false, :checked => (puzzle == Puzzle.first), :value => puzzle.title, :id => puzzle.id, :class => "puzzle-radio") %>
 
-        <label class="puzzle-element" for="<%= puzzle.id %>">
-            <ul class="user-puzzles-list">
+        <label class="puzzle-element" id="puzzle-element-<%= puzzle.id %>" for="<%= puzzle.id %>">
+            <ul class="puzzles-list">
                 <li class="list-title"><%= puzzle.title %></li>
                 <li><%= cl_image_tag(puzzle.public_id, :width => 400, :crop => :limit, :class => "list-image") %></li>
-                 <li><%= link_to "Delete Puzzle", p, :method => :delete, :data => { :confirm => "Are you sure?"} %></li>
+                 <li>
+                    <%= check_box_tag("ids[]", puzzle.id, false, :class => "hidden", :id => "puzzle#{puzzle.id}") %>
+                    <%= check_box_tag("delete[]", puzzle.public_id, false, :class => "puzzle-delete-check", :id => "delete#{puzzle.id}", :"data-num" => puzzle.id) %>
+                    <label for="delete<%= puzzle.id %>" class="puzzle-delete">Delete </label>
+                </li>
             </ul>
         </label>
     </div>
 <%
-    @count += 1
-    if @count == 4 || puzzle == @puzzles.last
-        @count = 0
+    if (puzzle_counter + 1) % 4 == 0|| puzzle == @puzzles.last
         %> </div> <%
     end
 %>
