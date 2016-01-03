@@ -3,7 +3,8 @@
         - @puzzle.errors.full_messages.each do |msg|
             %li{:class => "alert alert-danger", :role => "alert"}=msg
 
-= form_for @puzzle, :html => {:id => "new-puzzle-form", :class => "col-md-3 center-block", :multipart => true } do |f|
+= form_for @puzzle, :html => {:id => "new-puzzle-form", :class => "col-md-3 center-block interact-form", :multipart => true } do |f|
+    %h3 Upload a Puzzle
     %div.form-group
         = f.label :title
         = f.text_field :title, :required => true, :class => "form-control"

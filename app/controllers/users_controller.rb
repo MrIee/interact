@@ -47,9 +47,11 @@ class UsersController < ApplicationController
       user_details[:public_id] = req["public_id"]
     end
 
-
-    @user.update user_details
-    redirect_to users_edit_path
+    if @user.update user_details
+      redirect_to users_edit_path
+    else
+      render :edit
+    end
   end
 
   def show
@@ -80,6 +82,29 @@ class UsersController < ApplicationController
       format.js
     end
 
+  end
+
+  def reset_password
+  end
+
+  def update_password
+    if params[:email] && @user = User.where("email = ?", params[:email]).first
+      new_password = SecureRandom.urlsafe_base64(6)
+      @user[:password_digest] = new_password
+
+      respond_to do |format|
+        if @user.save
+          UserMailer.reset_password_email(@user, new_password).deliver_now
+          format.html { redirect_to login_path }
+          #redirect_to login_path
+        else
+          flash[:error] = "Email not is not registered to any user"
+          format.html { render :reset_password }
+          #render :reset_password
+        end
+      end
+
+    end
   end
 
   private

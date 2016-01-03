@@ -1,22 +1,49 @@
+body.users.edit {
+    .nav-tabs > li.active > a,
+    .nav-tabs > li.active > a:hover,
+    .nav-tabs > li.active > a:focus {
+        border-bottom-color: #ddd;
+        border-right-color: transparent;
+    }
+
+    .nav-tabs {
+        border-bottom-color: transparent;
+        position: relative;
+        left: -1.1%;
+        z-index: 10;
+    }
+
+    .tab-content {
+        position: absolute;
+        right: 0;
+    }
+}
+
 body.users.show .list-user{
     display: none;
 }
 
-body.users.show_puzzles .fixed-menu {
-    padding-bottom: 0;
-}
+body.users.show_puzzles {
+    .alert-danger {
+        display: block;
+    }
 
-body.users.show_puzzles .row:nth-child(1) > .col {
-    margin-top: 50px;
-}
+     .fixed-menu {
+        padding-bottom: 0;
+    }
 
-body.users.show_puzzles .navbar-fixed-menu-scroll {
-    padding-bottom: 5.5em;
+    .row:nth-child(1) > .col {
+        margin-top: 50px;
+    }
+
+    .navbar-fixed-menu-scroll {
+        padding-bottom: 5.5em;
+    }
 }
 
 #select-all-check {
     margin-top: 1em;
-    z-index: 999;
+    z-index: $fixed-menu-z;
 }
 
 .fixed-menu-scroll#select-all-check {
@@ -29,6 +56,30 @@ body.users.show_puzzles .navbar-fixed-menu-scroll {
 
 .puzzle-delete-checked {
     border: 3px solid red;
+}
+
+@media (max-width: 992px) {
+    body.users.edit {
+        .nav-tabs > li.active > a,
+        .nav-tabs > li.active > a:hover,
+        .nav-tabs > li.active > a:focus {
+            border-right-color: #ddd;
+        }
+
+        .nav-tabs {
+            border-bottom-color: #ddd;
+            left: 0;
+        }
+
+        .tab-content {
+            margin: 0 auto;
+            left: 0;
+        }
+
+        .interact-form {
+            padding-bottom: 1em;
+        }
+    }
 }
 
 @media (max-width: 768px) {

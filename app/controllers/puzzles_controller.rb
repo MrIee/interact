@@ -1,5 +1,5 @@
 class PuzzlesController < ApplicationController
-    before_action :check_if_logged_in, :only => [:new, :show]
+    before_action :check_if_logged_in, :only => [:new]
 
     def index
         if params[:filter] && params[:s]

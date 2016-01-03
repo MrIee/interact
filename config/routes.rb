@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get "/users/edit" => "users#edit"
   get "/users/puzzles/" => "users#show_puzzles"
   get "/users/view/:id" => "users#show"
+  get "/users/reset_password" => "users#reset_password"
+  post "/users/update_password" => "users#update_password"
 
   resources :puzzles, :except => [:edit, :show, :update, :destroy]
   get "/puzzles/:title/:size" => "puzzles#show"

@@ -8,16 +8,13 @@ var UsersController = Paloma.controller('Users');
 PuzzlesController.prototype.show = function(){
     var ruby = this;
 
-    $("#timer").timer({
-        format: "%M:%S"
-    });
-
     var Puzzle = {
         canvas: $("#canvas-pieces"),
         imagePath: "url(" + ruby.params['url'] + ")",
         size: ruby.params["size"],
         gridSize: ruby.params["size"] * ruby.params["size"],
         pieceScore: 0,
+        timerStarted: false,
 
         run: function() {
             //============== create puzzle and board pieces ===============
@@ -112,6 +109,15 @@ PuzzlesController.prototype.show = function(){
             target.setAttribute('data-y', y);
 
             $(target).css("zIndex", 99);
+
+            if (!Puzzle.timerStarted) {
+                $("#timer").timer({
+                    format: "%M:%S"
+                });
+
+                Puzzle.timerStarted = true;
+                console.log("timer started");
+            }
         },
 
         makePuzzleDraggable: function() {

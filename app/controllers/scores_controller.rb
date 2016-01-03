@@ -2,14 +2,14 @@ class ScoresController < ApplicationController
     def index
         if params[:filter] && params[:s]
             if params[:filter] == "username"
-                @scores = Score.joins(:user).where("#{params[:filter]} ILIKE ?", "%#{params[:s]}%").order(puzzle_size: :asc, puzzle_score: :asc)
+                @scores = Score.joins(:user).where("#{params[:filter]} ILIKE ?", "%#{params[:s]}%").order(puzzle_size: :asc, puzzle_score: :asc).paginate(page: params[:page])
             elsif params[:filter] == "title"
-                @scores = Score.joins(:puzzle).where("#{params[:filter]} ILIKE ?", "%#{params[:s]}%").order(puzzle_size: :asc, puzzle_score: :asc)
+                @scores = Score.joins(:puzzle).where("#{params[:filter]} ILIKE ?", "%#{params[:s]}%").order(puzzle_size: :asc, puzzle_score: :asc).paginate(page: params[:page])
             elsif params[:filter] == "puzzle_size"
-                @scores = Score.where("#{params[:filter]} = ?", params[:s].to_i).order(puzzle_size: :asc, puzzle_score: :asc)
+                @scores = Score.where("#{params[:filter]} = ?", params[:s].to_i).order(puzzle_size: :asc, puzzle_score: :asc).paginate(page: params[:page])
             end
         else
-            @scores = Score.all.order(puzzle_size: :asc, puzzle_score: :asc)
+            @scores = Score.all.order(puzzle_size: :asc, puzzle_score: :asc).paginate(page: params[:page])
         end
     end
 

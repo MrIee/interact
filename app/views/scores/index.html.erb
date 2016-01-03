@@ -16,6 +16,7 @@
     </form>
     <%
         if !@scores.empty?
+            count = 1
         %>
             <table class="table table-bordered">
                 <tr><th>User</th><th>Puzzle</th><th>Size</th><th>Time</th></tr>
@@ -23,8 +24,9 @@
             @scores.each do|score|
                 user = User.find score.user_id
                 puzzle = Puzzle.find score.puzzle_id
+                count += 1
         %>
-            <tr>
+            <tr <%= "class=tr-highlight" if count % 2 != 0 %> >
                 <td><%= link_to(user.username, "#{users_path}/view/#{score.user_id}") %></td>
                 <td><%= link_to(puzzle.title, "#{puzzles_path}/#{score.puzzle.title}/#{score.puzzle_size}") %></td>
                 <td><%= link_to("#{score.puzzle_size} x #{score.puzzle_size}", "#{leaderboard_path}?s=#{score.puzzle_size}&filter=puzzle_size") %></td>
@@ -32,7 +34,11 @@
             <tr>
         <%
             end
-            %></table><%
+            %>
+            </table>
+            <div class="center-text">
+                <%= will_paginate @puzzle %>
+            </div><%
         else
             %><h3 class="center-text">No matching results</h3><%
         end

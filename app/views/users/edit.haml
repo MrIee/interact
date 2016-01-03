@@ -3,45 +3,47 @@
         - @user.errors.full_messages.each do |msg|
             %li{:class => "alert alert-danger", :role => "alert"}=msg
 
-%ul.nav.nav-tabs.nav-stacked.col-md-2{:role => "tablist"}
-    %li.active
-        %a{href: "#profile", :"data-toggle" => "tab", :"aria-controls" => "profile", :role => "tab"}Profile
-    %li
-        %a{href: "#change_password", :"data-toggle" => "tab", :"aria-controls" => "change_password", :role => "tab"}Password
+%div.col-xs-12.col-sm-5.col-md-6.center-block
+    %ul.nav.nav-tabs.nav-stacked.col-no-pad.col-md-3{:role => "tablist"}
+        %li.active
+            %a{href: "#profile", :"data-toggle" => "tab", :"aria-controls" => "profile", :role => "tab", :class => "col-no-pad"}Profile
+        %li
+            %a{href: "#change_password", :"data-toggle" => "tab", :"aria-controls" => "change_password", :role => "tab", :class => "col-no-pad"}Password
 
-    %li
-        %a{href: "#profile_picture", :"data-toggle" => "tab", :"aria-controls" => "profile_picture", :role => "tab"}Profile Picture
+        %li
+            %a{href: "#profile_picture", :"data-toggle" => "tab", :"aria-controls" => "profile_picture", :role => "tab", :class => "col-no-pad"}Profile Picture
 
-%div.tab-content.col-md-10
-    %div.tab-pane.active#profile{:role=>"tabpanel"}
-        %h3 Edit Account Details
-        = form_for @user, :html => { :class => "col-md-3 center-block" } do |f|
-            %div.form-group
-                = f.label :first_name
-                = f.text_field :first_name, :required => true, :class => "form-control"
-            %div.form-group
-                = f.label :last_name
-                = f.text_field :last_name, :required => true, :class => "form-control"
-            %div.form-group
-                = f.label :email
-                = f.email_field :email, :required => true, :class => "form-control"
-            = f.submit "Update", :class => "btn btn-primary"
+    %div.tab-content.col-no-pad.col-md-9.interact-form
+        %div.tab-pane.active#profile{:role=>"tabpanel"}
+            %h3.center-text Edit Account Details
+            = form_for @user, :html => { :class => "col-md-9 center-block" } do |f|
+                %div.form-group
+                    = f.label :first_name
+                    = f.text_field :first_name, :required => true, :class => "form-control"
+                %div.form-group
+                    = f.label :last_name
+                    = f.text_field :last_name, :required => true, :class => "form-control"
+                %div.form-group
+                    = f.label :email
+                    = f.email_field :email, :required => true, :class => "form-control"
+                = f.submit "Update", :class => "btn btn-primary"
 
-    %div.tab-pane#change_password{:role=>"tabpanel"}
-        = form_for @user, :html => { :class => "col-md-3 center-block"} do |f|
-            %div.form-group
-                = f.label :password
-                = f.password_field :password, :required => true, :class => "form-control"
-            %div.form-group
-                = f.label :password_confirmation
-                = f.password_field :password_confirmation, :required => true, :class => "form-control"
-            = submit_tag("Change Password", :class => "btn btn-primary")
+        %div.tab-pane#change_password{:role=>"tabpanel"}
+            %h3.center-text Edit Password
+            = form_for @user, :html => { :class => "col-md-9 center-block"} do |f|
+                %div.form-group
+                    = f.label :password
+                    = f.password_field :password, :required => true, :class => "form-control"
+                %div.form-group
+                    = f.label :password_confirmation
+                    = f.password_field :password_confirmation, :required => true, :class => "form-control"
+                = submit_tag("Change Password", :class => "btn btn-primary")
 
-    %div.tab-pane#profile_picture{:role=>"tabpanel"}
-        = form_for @user, :html => { :class => "col-md-3 center-block", :multipart => true } do |f|
-            %div.form-group
-                %img.profile-picture{:src => "#{@user.profile_picture}" }
-                = f.label :profile_picture
-                = f.cl_image_upload :profile_picture, :html => { :required => "true", :class => "form-control" }
-                = f.hidden_field :profile_picture
-            = f.submit "Update Profile Picture", :class => "btn btn-primary"
+        %div.tab-pane#profile_picture{:role=>"tabpanel"}
+            %h3.center-text Edit Profile Picture
+            = form_for @user, :html => { :class => "col-md-9 center-block", :multipart => true } do |f|
+                %div.form-group
+                    = cl_image_tag(@user.public_id, :class => "profile-picture center-block")
+                    = f.cl_image_upload :profile_picture, :html => { :required => "true", :class => "form-control" }
+                    = f.hidden_field :profile_picture
+                = f.submit "Update Profile Picture", :class => "btn btn-primary center-block"

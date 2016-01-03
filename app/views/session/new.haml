@@ -2,7 +2,8 @@
     %ul.dotless-list
         %li{:class => "alert alert-danger", :role => "alert"}= flash[:error]
 
-= form_tag "/login", :class => "col-md-3 center-block" do
+= form_tag "/login", :class => "col-md-3 center-block interact-form" do
+    %h3.center-text Login
     %div.form-group
         = label_tag "Email"
         = text_field_tag :email, nil, :autofocus => true, :required => true, :class => "form-control"
@@ -10,3 +11,5 @@
         = label_tag "Password"
         = password_field_tag :password, nil, :requried => true, :class => "form-control"
     = submit_tag "Login", :class => "btn btn-primary"
+    %div.form-group
+        = link_to("Forgot your password?", users_reset_password_path)

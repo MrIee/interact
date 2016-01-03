@@ -3,23 +3,25 @@
         - @user.errors.full_messages.each do |msg|
             %li{:class => "alert alert-danger", :role => "alert"}=msg
 
-= form_for @user, :html => { :class => "col-md-3 center-block" } do |f|
-    %div.form-group
-        = f.label :first_name
-        = f.text_field :first_name, :required => true, :class => "form-control"
-    %div.form-group
-        = f.label :last_name
-        = f.text_field :last_name, :class => "form-control"
-    %div.form-group
-        = f.label :email
-        = f.email_field :email, :required => true, :class => "form-control"
-    %div.form-group
-        = f.label :username
-        = f.text_field :username, :required => true, :class => "form-control"
-    %div.form-group
-        = f.label :password
-        = f.password_field :password, :required => true, :class => "form-control"
-    %div.form-group
-        = f.label :password_confirmation, "Password Confirmation"
-        = f.password_field :password_confirmation, :required => true, :class => "form-control"
-    = f.submit "Sign Up", :class => "btn btn-primary"
+= form_for @user, :html => { :class => "col-xs-12 col-sm-6 col-md-5 center-block interact-form" } do |f|
+    %div.col-sm-9.col-md-7.center-block
+        %h3.center-text Sign Up
+        %div.form-group
+            = f.label :first_name
+            = f.text_field :first_name, :required => true, :class => "form-control"
+        %div.form-group
+            = f.label :last_name
+            = f.text_field :last_name, :class => "form-control"
+        %div.form-group
+            = f.label :email
+            = f.email_field :email, :required => true, :class => "form-control"
+        %div.form-group
+            = f.label :username
+            = f.text_field :username, :required => true, :class => "form-control"
+        %div.form-group
+            = f.label :password
+            = f.password_field :password, :required => true, :class => "form-control"
+        %div.form-group
+            = f.label :password_confirmation, "Password Confirmation"
+            = f.password_field :password_confirmation, :required => true, :class => "form-control"
+        = f.submit "Sign Up", :class => "btn btn-primary"

@@ -44,7 +44,7 @@ var checkDeleteBox = function() {
 
 
 var will_infiniteScroll = function() {
-    var url = $('.pagination .next_page a').attr('href');
+    var url = $('#infinite-scrolling .pagination .next_page a').attr('href');
         if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 100) {
             
             $('.pagination').html('<%= image_tag("ajax-loader.gif", :alt => "Loading...", :title => "Loading...") %>')
@@ -62,22 +62,26 @@ var will_paginate = function() {
 }
 
 var fixedOnScroll = function() {
-    var elementPosition = $('.fixed-menu').offset();
+    
+    if ($('.fixed-menu').length) {
+        var $fixedMenu = $('.fixed-menu');
+        var elementPosition = $fixedMenu.offset();
 
-    $(window).scroll(function() {
-        if ($(window).scrollTop() > elementPosition.top - 10){
-            $(".fixed-menu").addClass("fixed-menu-scroll");
-            $("#select-all-check").addClass("fixed-menu-scroll");
-            $(".navbar").addClass("navbar-fixed-menu-scroll");
-            $(".brand-name").addClass("hide-brand-name");
-        }
-        else {
-            $(".fixed-menu").removeClass("fixed-menu-scroll");
-            $("#select-all-check").removeClass("fixed-menu-scroll");
-            $(".navbar").removeClass("navbar-fixed-menu-scroll");
-            $(".brand-name").removeClass("hide-brand-name");
-        }    
-    });
+        $(window).scroll(function() {
+            if ($(window).scrollTop() > elementPosition.top - 10){
+                $fixedMenu.addClass("fixed-menu-scroll");
+                $("#select-all-check").addClass("fixed-menu-scroll");
+                $(".navbar").addClass("navbar-fixed-menu-scroll");
+                $(".brand-name").addClass("hide-brand-name");
+            }
+            else {
+                $fixedMenu.removeClass("fixed-menu-scroll");
+                $("#select-all-check").removeClass("fixed-menu-scroll");
+                $(".navbar").removeClass("navbar-fixed-menu-scroll");
+                $(".brand-name").removeClass("hide-brand-name");
+            }    
+        });
+    }
 }
 
 $(document).on('page:load', function(){

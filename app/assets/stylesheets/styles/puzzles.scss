@@ -1,17 +1,22 @@
+body.puzzles.new  {
+    .interact-form {
+        padding-bottom: 1em;
+    }
+}
+
 #canvas {
     position: absolute;
 }
 
 #canvas-pieces {
     background-color: rgb(240, 240, 240);
-    position: absolute;
+    float: left;
     z-index: 1;
 }
 
 #canvas-puzzle {
-    background-color: rgb(200, 225, 255);
-    position: absolute;
-    right: 0;
+    background-color: $highlight-color;
+    float: right;
 }
 
 .puzzle-piece {
@@ -28,6 +33,7 @@
 }
 
 #timer {
+    height: 75px;
     width: 150px;
     font-size: 4em;
     text-align: center;
