@@ -1,4 +1,4 @@
-class UserMailer < ApplicationMailer
+class UserMailer < ActionMailer::Base
     default from: 'notifications@interact-puzzle.herokuapp.com'
 
     def reset_password_email(user, password)

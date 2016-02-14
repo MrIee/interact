@@ -90,19 +90,15 @@ class UsersController < ApplicationController
   def update_password
     if params[:email] && @user = User.where("email = ?", params[:email]).first
       new_password = SecureRandom.urlsafe_base64(6)
-      @user[:password_digest] = new_password
+      @user.password = new_password
 
-      respond_to do |format|
         if @user.save
-          UserMailer.reset_password_email(@user, new_password).deliver_now
-          format.html { redirect_to login_path }
-          #redirect_to login_path
+          UserMailer.reset_password_email(@user, new_password).deliver
+          redirect_to login_path
         else
           flash[:error] = "Email not is not registered to any user"
-          format.html { render :reset_password }
-          #render :reset_password
+          render :reset_password
         end
-      end
 
     end
   end
