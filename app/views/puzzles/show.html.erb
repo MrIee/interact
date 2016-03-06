@@ -28,6 +28,10 @@
   </div>
 </div>
 
+<% if flash[:success].present? %>
+    <div class="alert alert-success center-text center-block" role="alert">Your score has been submitted.</div>
+  </ul>
+<% end %>
 
 <h1><%= @puzzle.title %></h1>
 

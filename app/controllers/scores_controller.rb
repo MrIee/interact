@@ -17,7 +17,10 @@ class ScoresController < ApplicationController
         @score = Score.new score_params
         if @score.save
             puzzle = Puzzle.find params[:score]["puzzle_id"]
-            redirect_to("#{puzzles_path}/#{puzzle.title}/#{ params[:score]["puzzle_size"] }")
+            puzzle_title = puzzle.title.gsub " ", "%20"
+
+            redirect_to("#{puzzles_path}/#{puzzle_title}/#{ params[:score]["puzzle_size"] }")
+            flash[:success] = "Score submitted"
         end
     end
 
