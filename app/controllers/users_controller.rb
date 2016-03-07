@@ -92,13 +92,13 @@ class UsersController < ApplicationController
       new_password = SecureRandom.urlsafe_base64(6)
       @user.password = new_password
 
-        if @user.save
-          UserMailer.reset_password_email(@user, new_password).deliver
-          redirect_to login_path
-        else
-          flash[:error] = "Email not is not registered to any user"
-          render :reset_password
-        end
+      if @user.save
+        UserMailer.reset_password_email(@user, new_password).deliver
+        redirect_to login_path
+      else
+        flash[:error] = "Email not is not registered to any user"
+        render :reset_password
+      end
 
     end
   end

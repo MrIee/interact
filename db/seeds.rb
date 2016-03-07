@@ -40,5 +40,5 @@ Score.create!([
 User.destroy_all
 User.create!([
   {first_name: "Wally", last_name: "West", email: "wallywest@gmail.com", username: "wally", password_digest: "$2a$10$Uo7mqSoLVeMTP//NWz4eiuwkJltu68.c0EgmXDCniFxgNBq3KYLNq", profile_picture: "http://res.cloudinary.com/dtr4wot8a/image/upload/v1451217764/kqwwtdoj1hz8kzkq3pzq.jpg", public_id: "kqwwtdoj1hz8kzkq3pzq"},
-  {first_name: "Alex", last_name: "Lee", email: "alex@gmail.com", username: "alex", password_digest: "$2a$10$Ly5EhQa8f2Sg6qFd7ydZwelvjGdgzo8NGy5BnwyFmssebXY.JCptK", profile_picture: "http://res.cloudinary.com/dtr4wot8a/image/upload/v1450935422/profile_sgpoeq.jpg", public_id: "profile_sgpoeq"}
+  {first_name: "Alex", last_name: "Lee", email: "alexwlee.web@gmail.com", username: "alex", password_digest: "$2a$10$Ly5EhQa8f2Sg6qFd7ydZwelvjGdgzo8NGy5BnwyFmssebXY.JCptK", profile_picture: "http://res.cloudinary.com/dtr4wot8a/image/upload/v1450935422/profile_sgpoeq.jpg", public_id: "profile_sgpoeq"}
 ])
